@@ -13,8 +13,12 @@ int main()
 
     /// Un exemple de graphe
     Graph g;
-    g.make_example();///créer 3fonctions similaire a make example avec les 3 graphes
+    g.make_example();
 
+    while ( !key[KEY_R] )
+    {
+        grman::testo();
+    }
 
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )
@@ -22,7 +26,6 @@ int main()
     {
         /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
         g.update();
-
 
         /// Mise à jour générale (clavier/souris/buffer etc...)
         grman::mettre_a_jour();

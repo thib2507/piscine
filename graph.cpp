@@ -164,7 +164,7 @@ void Graph::make_example()
 
     /// Les sommets doivent être définis avant les arcs
     // Ajouter le sommet d'indice 0 de valeur 30 en x=200 et y=100 avec l'image clown1.jpg etc...
-    add_interfaced_vertex(0, 30.0, 200, 100, "pap.jpg");
+    add_interfaced_vertex(0, 30.0, 200, 100, "clown1.jpg");
     add_interfaced_vertex(1, 60.0, 400, 100, "clown2.jpg");
     add_interfaced_vertex(2,  50.0, 200, 300, "clown3.jpg");
     add_interfaced_vertex(3,  0.0, 400, 300, "clown4.jpg");
@@ -199,7 +199,7 @@ void Graph::update()
     for (auto &elt : m_edges)
         elt.second.pre_update();
 
-    m_interface->m_top_box.update();
+    m_interface->m_top_box.update(); //Si supprime, plus d'affichage
 
     for (auto &elt : m_vertices)
         elt.second.post_update();
@@ -207,9 +207,8 @@ void Graph::update()
     for (auto &elt : m_edges)
         elt.second.post_update();
 
-    std::cout<<m_vertices[0].m_interface->m_top_box.get_posx()<<std::endl;
-std::cout<<m_vertices[0].m_interface->m_top_box.get_posy()<<std::endl;
-std::cout<<m_vertices[1].m_interface->m_top_box.get_posy()<<std::endl;
+        std::cout << m_vertices[0].m_interface->m_top_box.get_posx() << "     " << m_vertices[0].m_interface->m_top_box.get_posy() << std::endl;
+
 }
 
 /// Aide à l'ajout de sommets interfacés

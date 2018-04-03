@@ -34,6 +34,7 @@ namespace grman
 int page_color=PAGE_COULEUR_INIT;
 
 BITMAP *page=NULL;
+BITMAP *test=NULL; ///HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 char key_last;
 int mouse_click;
@@ -186,6 +187,9 @@ void init()
     show_mouse(screen);
 
     page=create_bitmap(SCREEN_W,SCREEN_H);
+    test=create_bitmap(SCREEN_W,SCREEN_W); ///HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 
     rafraichir_clavier_souris();
     buf_effacer_page();
@@ -209,6 +213,16 @@ void buf_effacer_page()
 {
     if (!page) return;
     clear_to_color(page, page_color);
+}
+
+void testo() ///HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+{
+    if (!test) return;
+    if (!page) return;
+
+    acquire_screen(); ///JSP A KOI SA CERT
+    blit(test, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    release_screen();
 }
 
 void buf_afficher_page()

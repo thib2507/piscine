@@ -70,10 +70,10 @@ void Widget::update_draw()
 {
     create_frame_context();
 
-    if (m_bg_color!=-1)
+    if (m_bg_color!=-1) //la bitmap fond n'est plus là
         clear_to_color(m_view_wb, m_bg_color);
 
-    draw();
+    draw(); //Affiche les images de clown
 
     /// Propagation de l'update aux elements enfants
     /// On affiche en dernier (devant les autres) les éléments ajoutés en dernier

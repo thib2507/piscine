@@ -1,0 +1,15 @@
+1
+6
+0 100 100 456grass.bmp
+1 50 96 192sauterelle.bmp
+2 30 356 64mouse.bmp
+3 10 680 41snake.bmp
+4 5 668 457hibou.bmp
+5 100 374 599mushrooms.bmp
+6
+0 0 1 50
+1 1 2 20
+2 2 3 10
+3 3 4 3
+4 4 5 1
+5 5 0 80

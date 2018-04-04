@@ -13,6 +13,7 @@ int main()
 
     /// Un exemple de graphe
     Graph g;
+
     menu m;
     //
     m.load_menu();
@@ -21,21 +22,27 @@ int main()
     {
         m.display(g);
 
+
+
+
         grman::mettre_a_jour();
     }
 
-    g.make_example();
+     g.make_example("graph1.txt");
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )
    while ( !key[KEY_ESC] )
     {
         /// Il faut appeler les méthodes d'update des objets qui comportent des widgets
 
-    g.update();
+        g.update();
+
+
         /// Mise à jour générale (clavier/souris/buffer etc...)
         grman::mettre_a_jour();
     }
 
+    g.save_graph();
     grman::fermer_allegro();
 
     return 0;

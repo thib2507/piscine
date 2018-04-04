@@ -73,7 +73,7 @@ int menu::display(Graph g)
 
    if ( m_bouton2.clicked() ){
 
-g.make_example();
+g.make_example("graph1.txt");
 g.update();
 return 1;
   }

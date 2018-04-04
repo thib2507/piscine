@@ -1,6 +1,8 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 
+
+
 /**************************************************************
     Ici sont proposées 3 classes fondamentales
             Vertex (=Sommet)
@@ -75,6 +77,9 @@
 #include <map>
 #include <string>
 #include <memory>
+#include <fstream>
+#include <sstream>
+
 
 #include "grman/grman.h"
 
@@ -288,6 +293,8 @@ class Graph
 {
     private :
 
+        int m_id;
+
         /// La "liste" des arêtes
         std::map<int, Edge> m_edges;
 
@@ -312,9 +319,12 @@ class Graph
         /// Voir implémentation dans le .cpp
         /// Cette méthode est à enlever et remplacer par un système
         /// de chargement de fichiers par exemple.
+
          ///METHODE CHARGEMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        void make_example();
+
         void ajout(int idx);
+        void make_example(const std::string& nom_fichier);
+        void save_graph();
 
 
 

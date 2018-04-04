@@ -301,6 +301,8 @@ class Graph
         /// La liste des sommets
         std::map<int, Vertex> m_vertices;
 
+        std::map <int, Vertex> m_cim;
+
         /// le POINTEUR sur l'interface associée, nullptr -> pas d'interface
         std::shared_ptr<GraphInterface> m_interface = nullptr;
 
@@ -323,6 +325,7 @@ class Graph
          ///METHODE CHARGEMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         void ajout(int idx);
+        void supprimer(int idx);
         void make_example(const std::string& nom_fichier);
         void save_graph();
 

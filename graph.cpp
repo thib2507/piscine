@@ -247,7 +247,7 @@ void Graph::save_graph()
 
     std::stringstream path;
 
-    path << "graph" << m_id << ".txt";
+    path << "graphtest" << m_id << ".txt";
 
     std::ofstream fichier(path.str(), std::ios::out | std::ios::trunc);
 
@@ -306,8 +306,21 @@ int Graph::update()
     for (auto &elt : m_edges)
         elt.second.post_update();
  if(m_interface->m_ajout.clicked()){
+ int b;
+    std::cout<<"rentrer idx sommet à ajouter de type int "<<std::endl;
+    std::cin>>b;
+    ajout(b);
 
-    ajout(8);
+ }
+
+ if(m_interface->m_sup.clicked()){
+
+    int a;
+    std::cout<<"rentrer idx sommet à supprimer de type int "<<std::endl;
+    std::cin>>a;
+    supprimer(a);
+    grman::mettre_a_jour();
+
  }
 
 }
@@ -359,5 +372,40 @@ void Graph::ajout(int idx){
 add_interfaced_vertex(idx,50.0,200,300,"pap.jpg");
 
 
+
 }
 
+void Graph::supprimer(int idx){
+
+m_cim.insert(std::pair <int,Vertex> (idx,m_vertices[idx]));
+m_interface->m_main_box.remove_child(m_vertices[idx].m_interface->m_top_box);
+m_vertices.erase(idx);
+
+int nbarete;
+int S1, S2,indice ,poids;
+
+std::stringstream path;
+
+    path << "ref" << m_id << ".txt";
+
+std::ifstream fichier(path.str()); //ouverture du fichier
+        if(fichier) //si le fichier à bien été ouvert
+        {
+            fichier>>nbarete;
+
+            for(int i=0;i<nbarete;i++){
+
+                fichier>>S1>>S2>>indice>>poids;
+                if(S1==idx || S2==idx ){
+                    std::cout<<S1<<"    "<<S2<<std::endl;
+                    m_interface->m_main_box.remove_child(m_edges[indice].m_interface->m_top_edge);
+                    m_interface->m_main_box.remove_child(m_edges[indice].m_interface->m_box_edge);
+                    m_edges.erase(indice);
+
+                }
+
+            }
+
+        }
+
+}

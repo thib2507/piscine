@@ -5,7 +5,7 @@
 2 30 356 64mouse.bmp
 3 10 680 41snake.bmp
 4 5 668 457hibou.bmp
-5 100 374 599mushrooms.bmp
+5 5.71429 374 599mushrooms.bmp
 6
 0 0 1 50
 1 1 2 20

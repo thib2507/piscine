@@ -26,7 +26,7 @@ namespace grman
 #define HAUTEURECRAN 768
 
 // Couleur initiale :
-#define PAGE_COULEUR_INIT ROUGE
+#define PAGE_COULEUR_INIT BLANCBLEU
 
 // Temporisation de la boucle de jeu en ms ( rest dans mettre_a_jour )
 #define TEMPO_MAJ 20

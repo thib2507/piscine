@@ -1,5 +1,5 @@
 6
-0 100 30 250herbs.bmp
+0 100 30 250grass.bmp
 1 50 90 250sauterelle.bmp
 2 30 160 250mouse.bmp
 3 10 220 250snake.bmp

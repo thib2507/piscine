@@ -324,7 +324,7 @@ class Graph
 
          ///METHODE CHARGEMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        void ajout(int idx);
+        void ajout();
         void supprimer(int idx);
         void make_example(const std::string& nom_fichier);
         void save_graph();

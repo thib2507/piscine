@@ -14,7 +14,7 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
 
     // Le slider de réglage de valeur
     m_top_box.add_child( m_slider_value );
-    m_slider_value.set_range(0.0 , 100.0); // Valeurs arbitraires, à adapter...
+    m_slider_value.set_range(0.0, 100.0);  // Valeurs arbitraires, à adapter...
     m_slider_value.set_dim(20,80);
     m_slider_value.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Up);
 
@@ -92,7 +92,7 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to)
 
     // Le slider de réglage de valeur
     m_box_edge.add_child( m_slider_weight );
-    m_slider_weight.set_range(0.0 , 100.0); // Valeurs arbitraires, à adapter...
+    m_slider_weight.set_range(0.0, 100.0);  // Valeurs arbitraires, à adapter...
     m_slider_weight.set_dim(16,40);
     m_slider_weight.set_gravity_y(grman::GravityY::Up);
 
@@ -150,15 +150,15 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_bg_color(BLANCJAUNE);
 
     m_top_box.add_child(m_retour);
-     m_retour.set_frame(10,180,75,75);
+    m_retour.set_frame(10,180,75,75);
     m_retour.set_bg_color(BLEU);
 
-     m_top_box.add_child(m_ajout);
-     m_ajout.set_frame(10,10,75,75);
+    m_top_box.add_child(m_ajout);
+    m_ajout.set_frame(10,10,75,75);
     m_ajout.set_bg_color(BLEU);
 
-     m_top_box.add_child(m_sup);
-     m_sup.set_frame(10,95,75,75);
+    m_top_box.add_child(m_sup);
+    m_sup.set_frame(10,95,75,75);
     m_sup.set_bg_color(BLEU);
 
     m_ajout.add_child(ajout);
@@ -198,46 +198,46 @@ void Graph::make_example(const std::string& nom_fichier)
     // m_interface = new GraphInterface(50, 0, 750, 600);
 
     std::ifstream fichier(nom_fichier.c_str()); //ouverture du fichier
-        if(fichier) //si le fichier à bien été ouvert
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier >> id;
+        m_id = id;
+
+        fichier >> nb_vertex;
+
+
+        /// Les sommets doivent être définis avant les arcs
+        // Ajouter le sommet d'indice 0 de valeur 30 en x=200 et y=100 avec l'image clown1.jpg etc...
+
+
+        for(int i=0; i<nb_vertex; i++)
         {
-            fichier >> id;
-            m_id = id;
+            fichier >> idx >> value >> x >> y;
+            std::getline(fichier,pic_name);
 
-            fichier >> nb_vertex;
-
-
-    /// Les sommets doivent être définis avant les arcs
-    // Ajouter le sommet d'indice 0 de valeur 30 en x=200 et y=100 avec l'image clown1.jpg etc...
-
-
-            for(int i=0; i<nb_vertex; i++)
-            {
-                fichier >> idx >> value >> x >> y;
-                std::getline(fichier,pic_name);
-
-                 add_interfaced_vertex(idx, value, x, y, pic_name);
-            }
-
-            fichier >> nb_edge;
-
-
-
-    /// Les arcs doivent être définis entre des sommets qui existent !
-    // AJouter l'arc d'indice 0, allant du sommet 1 au sommet 2 de poids 50 etc...
-
-            for(int i=0; i<nb_edge; i++)
-            {
-                fichier >> idx >> idVert1 >> idVert2 >> weight;
-
-                add_interfaced_edge(idx,idVert1,idVert2,weight);
-            }
-
+            add_interfaced_vertex(idx, value, x, y, pic_name);
         }
 
-           else
+        fichier >> nb_edge;
+
+
+
+        /// Les arcs doivent être définis entre des sommets qui existent !
+        // AJouter l'arc d'indice 0, allant du sommet 1 au sommet 2 de poids 50 etc...
+
+        for(int i=0; i<nb_edge; i++)
         {
-            std::cout << "file " << nom_fichier << " could not be found";
+            fichier >> idx >> idVert1 >> idVert2 >> weight;
+
+            add_interfaced_edge(idx,idVert1,idVert2,weight);
         }
+
+    }
+
+    else
+    {
+        std::cout << "file " << nom_fichier << " could not be found";
+    }
 
 }
 
@@ -256,23 +256,23 @@ void Graph::save_graph()
         fichier << m_id << std::endl;
         fichier << m_vertices.size() << std::endl;
 
-         for (auto it = m_vertices.begin(); it!=m_vertices.end(); ++it)
-         {
-             fichier << it->first << " " << it->second.m_value << " "
-             << it->second.m_interface->m_top_box.get_posx() + 2 << " " <<
-             it->second.m_interface->m_top_box.get_posy() + 2 <<
-              it->second.m_interface->m_img.get_pic_name() << std::endl;
+        for (auto it = m_vertices.begin(); it!=m_vertices.end(); ++it)
+        {
+            fichier << it->first << " " << it->second.m_value << " "
+                    << it->second.m_interface->m_top_box.get_posx() + 2 << " " <<
+                    it->second.m_interface->m_top_box.get_posy() + 2 <<
+                    it->second.m_interface->m_img.get_pic_name() << std::endl;
 
-         }
+        }
 
-         fichier << m_edges.size() << std::endl;
+        fichier << m_edges.size() << std::endl;
 
-         for (auto it = m_edges.begin(); it!=m_edges.end(); ++it)
-         {
-             fichier << it->first << " " << it->second.m_from << " " << it->second.m_to <<
-             " " << it->second.m_weight << std::endl;
+        for (auto it = m_edges.begin(); it!=m_edges.end(); ++it)
+        {
+            fichier << it->first << " " << it->second.m_from << " " << it->second.m_to <<
+                    " " << it->second.m_weight << std::endl;
 
-         }
+        }
 
 
 
@@ -290,7 +290,7 @@ void Graph::save_graph()
 int Graph::update()
 {
     //if (!m_interface)
-        //return;
+    //return;
 
     for (auto &elt : m_vertices)
         elt.second.pre_update();
@@ -305,23 +305,25 @@ int Graph::update()
 
     for (auto &elt : m_edges)
         elt.second.post_update();
- if(m_interface->m_ajout.clicked()){
- int b;
-    std::cout<<"rentrer idx sommet à ajouter de type int "<<std::endl;
-    std::cin>>b;
-    ajout(b);
 
- }
 
- if(m_interface->m_sup.clicked()){
+    if(m_interface->m_ajout.clicked())
+    {
 
-    int a;
-    std::cout<<"rentrer idx sommet à supprimer de type int "<<std::endl;
-    std::cin>>a;
-    supprimer(a);
-    grman::mettre_a_jour();
+        ajout();
 
- }
+    }
+
+    if(m_interface->m_sup.clicked())
+    {
+
+        int a;
+        std::cout<<"rentrer idx sommet à supprimer de type int "<<std::endl;
+        std::cin>>a;
+        supprimer(a);
+        grman::mettre_a_jour();
+
+    }
 
 }
 
@@ -361,51 +363,142 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_edges[idx] = Edge(weight, ei);
 
     /// OOOPS ! Prendre en compte l'arc ajouté dans la topologie du graphe !
-m_edges[idx].m_from = id_vert1;
-m_edges[idx].m_to = id_vert2;
-m_vertices[id_vert1].m_out.push_back(idx);
-m_vertices[id_vert2].m_in.push_back(idx);
+    m_edges[idx].m_from = id_vert1;
+    m_edges[idx].m_to = id_vert2;
+    m_vertices[id_vert1].m_out.push_back(idx);
+    m_vertices[id_vert2].m_in.push_back(idx);
 }
 
-void Graph::ajout(int idx){
+void Graph::ajout()
+{
+    int idx;
+    int nbarete;
+    int S1, S2,indice,poids;
 
-add_interfaced_vertex(idx,50.0,200,300,"pap.jpg");
+    //permet de s'assurrer de ne pas créer un arc avec un sommet détruit
+    bool add_edge_ok = false;
 
-
-
-}
-
-void Graph::supprimer(int idx){
-
-m_cim.insert(std::pair <int,Vertex> (idx,m_vertices[idx]));
-m_interface->m_main_box.remove_child(m_vertices[idx].m_interface->m_top_box);
-m_vertices.erase(idx);
-
-int nbarete;
-int S1, S2,indice ,poids;
-
-std::stringstream path;
+    std::stringstream path;
 
     path << "ref" << m_id << ".txt";
 
-std::ifstream fichier(path.str()); //ouverture du fichier
+
+    std::cout << "Sommets pouvant etre ajoutes :" << std::endl;
+
+    //on verifie que le cim n'est pas vide
+    if(m_cim.empty()==false)
+    {
+        //on affiche tout les sommets présent dans le cim
+        for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+        {
+            std::cout<<"- " <<it->first<<std::endl;
+        }
+
+        std::cout << "--> ";
+        std::cin >> idx;
+
+        //on ajoute le sommet
+        add_interfaced_vertex(idx,m_cim[idx].m_value,m_cim[idx].m_interface->m_top_box.get_posx()+2,
+                              m_cim[idx].m_interface->m_top_box.get_posy()+2,m_cim[idx].m_interface->m_img.get_pic_name());
+
+
+
+        //on ouvre le fichier de ref des arcs pour créer les arcs en conséquence
+        std::ifstream fichier(path.str()); //ouverture du fichier
         if(fichier) //si le fichier à bien été ouvert
         {
             fichier>>nbarete;
 
-            for(int i=0;i<nbarete;i++){
+            //on parcours toutes les arêtes du fichier
+            for(int i=0; i<nbarete; i++)
+            {
 
                 fichier>>S1>>S2>>indice>>poids;
-                if(S1==idx || S2==idx ){
-                    std::cout<<S1<<"    "<<S2<<std::endl;
-                    m_interface->m_main_box.remove_child(m_edges[indice].m_interface->m_top_edge);
-                    m_interface->m_main_box.remove_child(m_edges[indice].m_interface->m_box_edge);
-                    m_edges.erase(indice);
+
+                //si notre sommet est égal à l'un des sommets du fichier
+                if(S1==idx)
+                {
+                    //on s'assure que le second sommet n'est pas dans le cim
+                    add_edge_ok=true;
+                    for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                    {
+                        if(it->first == S2)
+                            add_edge_ok = false;
+
+                    }
+
+                    //Si le second sommet existe bien, on ajoute l'arc
+                    if(add_edge_ok==true)
+                        add_interfaced_edge(indice,S1,S2,poids);
 
                 }
+
+                //même démarche que précédement
+                if(S2==idx)
+                {
+                    add_edge_ok=true;
+                    for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                    {
+                        std::cout << it->first << " - " << S1 << std::endl;
+                        if(it->first == S1)
+                            add_edge_ok = false;
+                    }
+
+                    if(add_edge_ok==true)
+                        add_interfaced_edge(indice,S1,S2,poids);
+
+                }
+            }
+
+            //on efface le sommet du cim
+            m_cim.erase(idx);
+
+
+
+        }
+
+    }
+
+    else
+        std::cout << "  !!AUCUN!!" << std::endl;
+
+
+}
+
+void Graph::supprimer(int idx)
+{
+
+    m_cim.insert(std::pair <int,Vertex> (idx,m_vertices[idx]));
+    m_interface->m_main_box.remove_child(m_vertices[idx].m_interface->m_top_box);
+    m_vertices.erase(idx);
+
+    int nbarete;
+    int S1, S2,indice,poids;
+
+    std::stringstream path;
+
+    path << "ref" << m_id << ".txt";
+
+    std::ifstream fichier(path.str()); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier>>nbarete;
+
+        for(int i=0; i<nbarete; i++)
+        {
+
+            fichier>>S1>>S2>>indice>>poids;
+            if(S1==idx || S2==idx )
+            {
+                std::cout<<S1<<"    "<<S2<<std::endl;
+                m_interface->m_main_box.remove_child(m_edges[indice].m_interface->m_top_edge);
+                m_interface->m_main_box.remove_child(m_edges[indice].m_interface->m_box_edge);
+                m_edges.erase(indice);
 
             }
 
         }
+
+    }
 
 }

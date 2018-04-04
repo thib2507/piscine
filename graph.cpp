@@ -85,18 +85,18 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to)
     m_top_edge.attach_to(to.m_interface->m_top_box);
     m_top_edge.reset_arrow_with_bullet();
 
-    /// Une boite pour englober les widgets de réglage associés
+    // Une boite pour englober les widgets de réglage associés
     m_top_edge.add_child(m_box_edge);
     m_box_edge.set_dim(24,60);
     m_box_edge.set_bg_color(BLANCBLEU);
 
-    /// Le slider de réglage de valeur
+    // Le slider de réglage de valeur
     m_box_edge.add_child( m_slider_weight );
     m_slider_weight.set_range(0.0 , 100.0); // Valeurs arbitraires, à adapter...
     m_slider_weight.set_dim(16,40);
     m_slider_weight.set_gravity_y(grman::GravityY::Up);
 
-    /// Label de visualisation de valeur
+    // Label de visualisation de valeur
     m_box_edge.add_child( m_label_weight );
     m_label_weight.set_gravity_y(grman::GravityY::Down);
 
@@ -156,22 +156,65 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 /// de chargement de fichiers par exemple.
 /// Bien sûr on ne veut pas que vos graphes soient construits
 /// "à la main" dans le code comme ça.
-void Graph::make_example()
+void Graph::make_example(const std::string& nom_fichier)
 {
+    int nb_vertex;
+    int nb_edge;
+    int idx;
+    int id;
+    double value;
+    int x,y;
+    int idVert1, idVert2;
+    double weight;
+    std::string pic_name;
+
     m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
     // La ligne précédente est en gros équivalente à :
     // m_interface = new GraphInterface(50, 0, 750, 600);
 
-    /// Les sommets doivent être définis avant les arcs
+    std::ifstream fichier(nom_fichier.c_str()); //ouverture du fichier
+        if(fichier) //si le fichier à bien été ouvert
+        {
+            fichier >> id;
+            m_id = id;
+
+            fichier >> nb_vertex;
+
+            for(int i=0; i<nb_vertex; i++)
+            {
+                fichier >> idx >> value >> x >> y;
+                std::getline(fichier,pic_name);
+
+                 add_interfaced_vertex(idx, value, x, y, pic_name);
+            }
+
+            fichier >> nb_edge;
+
+            for(int i=0; i<nb_edge; i++)
+            {
+                fichier >> idx >> idVert1 >> idVert2 >> weight;
+
+                add_interfaced_edge(idx,idVert1,idVert2,weight);
+            }
+
+        }
+
+           else
+        {
+            std::cout << "file " << nom_fichier << " could not be found";
+        }
+
+
+ /*   /// Les sommets doivent être définis avant les arcs
     // Ajouter le sommet d'indice 0 de valeur 30 en x=200 et y=100 avec l'image clown1.jpg etc...
-    add_interfaced_vertex(0, 30.0, 200, 100, "pap.jpg");
+    add_interfaced_vertex(0, 30.0, 200, 100, "clown1.jpg");
     add_interfaced_vertex(1, 60.0, 400, 100, "clown2.jpg");
     add_interfaced_vertex(2,  50.0, 200, 300, "clown3.jpg");
     add_interfaced_vertex(3,  0.0, 400, 300, "clown4.jpg");
     add_interfaced_vertex(4,  100.0, 600, 300, "clown5.jpg");
-    add_interfaced_vertex(5,  0.0, 100, 500, "bad_clowns_xx3xx.jpg", 0);
-    add_interfaced_vertex(6,  0.0, 300, 500, "bad_clowns_xx3xx.jpg", 1);
-    add_interfaced_vertex(7,  0.0, 500, 500, "bad_clowns_xx3xx.jpg", 2);
+   // add_interfaced_vertex(5,  0.0, 100, 500, "bad_clowns_xx3xx.jpg", 0);
+    //add_interfaced_vertex(6,  0.0, 300, 500, "bad_clowns_xx3xx.jpg", 1);
+   // add_interfaced_vertex(7,  0.0, 500, 500, "bad_clowns_xx3xx.jpg", 2);
 
     /// Les arcs doivent être définis entre des sommets qui existent !
     // AJouter l'arc d'indice 0, allant du sommet 1 au sommet 2 de poids 50 etc...
@@ -179,12 +222,16 @@ void Graph::make_example()
     add_interfaced_edge(1, 0, 1, 50.0);
     add_interfaced_edge(2, 1, 3, 75.0);
     add_interfaced_edge(3, 4, 1, 25.0);
-    add_interfaced_edge(4, 6, 3, 25.0);
-    add_interfaced_edge(5, 7, 3, 25.0);
-    add_interfaced_edge(6, 3, 4, 0.0);
-    add_interfaced_edge(7, 2, 0, 100.0);
-    add_interfaced_edge(8, 5, 2, 20.0);
-    add_interfaced_edge(9, 3, 7, 80.0);
+    //add_interfaced_edge(4, 6, 3, 25.0);
+    //add_interfaced_edge(5, 7, 3, 25.0);
+    //add_interfaced_edge(8, 5, 2, 20.0);
+    //add_interfaced_edge(9, 3, 7, 80.0);*/
+}
+
+///Méthode de sauvegarde du graph
+void Graph::save_graph()
+{
+
 }
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
@@ -207,9 +254,9 @@ void Graph::update()
     for (auto &elt : m_edges)
         elt.second.post_update();
 
-std::cout<<m_vertices[0].m_interface->m_top_box.get_posx()<<std::endl;
-std::cout<<m_vertices[0].m_interface->m_top_box.get_posy()<<std::endl;
-std::cout<<m_vertices[1].m_interface->m_top_box.get_posy()<<std::endl;
+        //std::cout << m_vertices[0].m_interface->m_top_box.get_posx() << "     " << m_vertices[0].m_interface->m_top_box.get_posy() << std::endl;
+        //std::cout << m_vertices[0].m_interface->m_img.get_pic_name() << std::endl;
+
 }
 
 /// Aide à l'ajout de sommets interfacés

@@ -1,6 +1,8 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 
+
+
 /**************************************************************
     Ici sont proposées 3 classes fondamentales
             Vertex (=Sommet)
@@ -75,6 +77,8 @@
 #include <map>
 #include <string>
 #include <memory>
+#include <fstream>
+
 
 #include "grman/grman.h"
 
@@ -182,22 +186,22 @@ class EdgeInterface
         /// ici un widget pour qu'il apparaisse, il faut aussi le mettre en place et
         /// le paramétrer ( voir l'implémentation du constructeur dans le .cpp )
 
-        /// Le WidgetEdge qui "contient" toute l'interface d'un arc
+        // Le WidgetEdge qui "contient" toute l'interface d'un arc
         grman::WidgetEdge m_top_edge;
 
-        /// Une boite pour englober les widgets de réglage associés
+        // Une boite pour englober les widgets de réglage associés
         grman::WidgetBox m_box_edge;
 
-        /// Un slider de visualisation/modification du poids valeur de l'arc
+        // Un slider de visualisation/modification du poids valeur de l'arc
         grman::WidgetVSlider m_slider_weight;
 
-        /// Un label de visualisation du poids de l'arc
+        // Un label de visualisation du poids de l'arc
         grman::WidgetText m_label_weight;
 
     public :
 
-        /// Le constructeur met en place les éléments de l'interface
-        /// voir l'implémentation dans le .cpp
+        // Le constructeur met en place les éléments de l'interface
+        // voir l'implémentation dans le .cpp
         EdgeInterface(Vertex& from, Vertex& to);
 };
 
@@ -279,6 +283,8 @@ class Graph
 {
     private :
 
+        int m_id;
+
         /// La "liste" des arêtes
         std::map<int, Edge> m_edges;
 
@@ -303,7 +309,8 @@ class Graph
         /// Voir implémentation dans le .cpp
         /// Cette méthode est à enlever et remplacer par un système
         /// de chargement de fichiers par exemple.
-        void make_example();
+        void make_example(const std::string& nom_fichier);
+        void save_graph();
 
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface

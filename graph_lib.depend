@@ -164,3 +164,70 @@
 	<iostream>
 	"graph.h"
 
+1522792753 source:c:\users\thiba\github\piscine\graph.cpp
+	"graph.h"
+
+1522836544 c:\users\thiba\github\piscine\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522839300 c:\users\thiba\github\piscine\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1509222372 c:\users\thiba\github\piscine\grman\grman_couleurs.h
+
+1522575424 c:\users\thiba\github\piscine\grman\coords.h
+	<cmath>
+
+1522636616 c:\users\thiba\github\piscine\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522575069 source:c:\users\thiba\github\piscine\grman\coords.cpp
+	"coords.h"
+
+1522843643 source:c:\users\thiba\github\piscine\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522835148 source:c:\users\thiba\github\piscine\grman\widget.cpp
+	"widget.h"
+
+1522853248 source:c:\users\thiba\github\piscine\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+	"menu.h"
+
+1522853264 source:c:\users\thiba\github\piscine\menu.cpp
+	"menu.h"
+	"grman/widget.h"
+	"grman/grman.h"
+	"graph.h"
+
+1522853264 c:\users\thiba\github\piscine\menu.h
+	"grman/grman.h"
+	"grman/widget.h"
+	"graph.h"
+

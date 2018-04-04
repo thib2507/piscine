@@ -166,6 +166,10 @@ void WidgetText::draw()
     else
         for (int i=0, y=0; i<(int)m_message.length(); ++i, y+=text_height(m_font))
             textprintf_ex(m_view, font, 0, y, m_color, -1, "%c", m_message[i]);
+
+
+
+            ///a ajouter image
 }
 
 void WidgetText::set_message(std::string message)

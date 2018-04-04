@@ -260,6 +260,7 @@ class GraphInterface
         /// Dans cette boite seront ajoutés les (interfaces des) sommets et des arcs...
         grman::WidgetBox m_main_box;
 
+
         /// Dans cette boite seront ajoutés des boutons de contrôle etc...
         grman::WidgetBox m_tool_box;
 

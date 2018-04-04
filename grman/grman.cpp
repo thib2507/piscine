@@ -26,7 +26,7 @@ namespace grman
 #define HAUTEURECRAN 768
 
 // Couleur initiale :
-#define PAGE_COULEUR_INIT BLANC
+#define PAGE_COULEUR_INIT ROUGE
 
 // Temporisation de la boucle de jeu en ms ( rest dans mettre_a_jour )
 #define TEMPO_MAJ 20
@@ -34,7 +34,6 @@ namespace grman
 int page_color=PAGE_COULEUR_INIT;
 
 BITMAP *page=NULL;
-BITMAP *test=NULL; ///HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 char key_last;
 int mouse_click;
@@ -187,7 +186,6 @@ void init()
     show_mouse(screen);
 
     page=create_bitmap(SCREEN_W,SCREEN_H);
-    test=create_bitmap(SCREEN_W,SCREEN_W); ///HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
@@ -215,15 +213,6 @@ void buf_effacer_page()
     clear_to_color(page, page_color);
 }
 
-void testo() ///HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-{
-    if (!test) return;
-    if (!page) return;
-
-    acquire_screen(); ///JSP A KOI SA CERT
-    blit(test, page, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    release_screen();
-}
 
 void buf_afficher_page()
 {

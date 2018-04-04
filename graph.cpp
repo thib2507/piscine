@@ -148,6 +148,31 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_dim(908,720);
     m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
     m_main_box.set_bg_color(BLANCJAUNE);
+
+    m_top_box.add_child(m_retour);
+     m_retour.set_frame(10,180,75,75);
+    m_retour.set_bg_color(BLEU);
+
+     m_top_box.add_child(m_ajout);
+     m_ajout.set_frame(10,10,75,75);
+    m_ajout.set_bg_color(BLEU);
+
+     m_top_box.add_child(m_sup);
+     m_sup.set_frame(10,95,75,75);
+    m_sup.set_bg_color(BLEU);
+
+    m_ajout.add_child(ajout);
+    ajout.set_message("ajouter");
+
+    m_sup.add_child(sup);
+    sup.set_message("supprimer");
+
+    m_retour.add_child(retour);
+    retour.set_message("menu");
+
+
+
+
 }
 
 
@@ -172,7 +197,7 @@ void Graph::make_example()
     add_interfaced_vertex(5,  0.0, 100, 500, "bad_clowns_xx3xx.jpg", 0);
     add_interfaced_vertex(6,  0.0, 300, 500, "bad_clowns_xx3xx.jpg", 1);
     add_interfaced_vertex(7,  0.0, 500, 500, "bad_clowns_xx3xx.jpg", 2);
-    add_interfaced_vertex(8, 0.0, 250,400,"pap.jpg");
+
 
     /// Les arcs doivent être définis entre des sommets qui existent !
     // AJouter l'arc d'indice 0, allant du sommet 1 au sommet 2 de poids 50 etc...
@@ -186,14 +211,14 @@ void Graph::make_example()
     add_interfaced_edge(7, 2, 0, 100.0);
     add_interfaced_edge(8, 5, 2, 20.0);
     add_interfaced_edge(9, 3, 7, 80.0);
-    add_interfaced_edge(10,8,5,30.0);
+
 }
 
 /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-void Graph::update()
+int Graph::update()
 {
-    if (!m_interface)
-        return;
+    //if (!m_interface)
+        //return;
 
     for (auto &elt : m_vertices)
         elt.second.pre_update();
@@ -208,8 +233,10 @@ void Graph::update()
 
     for (auto &elt : m_edges)
         elt.second.post_update();
+ if(m_interface->m_ajout.clicked()){
 
-        std::cout << m_vertices[0].m_interface->m_top_box.get_posx() << "     " << m_vertices[0].m_interface->m_top_box.get_posy() << std::endl;
+    ajout(8);
+ }
 
 }
 
@@ -247,5 +274,12 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     EdgeInterface *ei = new EdgeInterface(m_vertices[id_vert1], m_vertices[id_vert2]);
     m_interface->m_main_box.add_child(ei->m_top_edge);
     m_edges[idx] = Edge(weight, ei);
+}
+
+void Graph::ajout(int idx){
+
+add_interfaced_vertex(idx,50.0,200,300,"pap.jpg");
+
+
 }
 

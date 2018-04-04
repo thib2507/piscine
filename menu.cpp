@@ -68,6 +68,7 @@ int menu::display(Graph g)
 
   if ( m_bouton5.clicked() ){
     exit(0);
+    return 0;
   }
 
    if ( m_bouton2.clicked() ){

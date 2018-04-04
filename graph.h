@@ -264,6 +264,14 @@ class GraphInterface
         /// Dans cette boite seront ajoutés des boutons de contrôle etc...
         grman::WidgetBox m_tool_box;
 
+        grman::WidgetButton m_retour;
+        grman::WidgetButton m_ajout;
+        grman::WidgetButton m_sup;
+        grman::WidgetText retour;
+        grman::WidgetText ajout;
+        grman::WidgetText sup;
+
+
 
         // A compléter éventuellement par des widgets de décoration ou
         // d'édition (boutons ajouter/enlever ...)
@@ -306,10 +314,12 @@ class Graph
         /// de chargement de fichiers par exemple.
          ///METHODE CHARGEMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         void make_example();
+        void ajout(int idx);
+
 
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
-        void update();
+        int update();
 
 
 

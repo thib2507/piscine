@@ -54,3 +54,58 @@
 	<iostream>
 	"graph.h"
 
+1522768491 source:c:\users\mario\desktop\piscine\grman\coords.cpp
+	"coords.h"
+
+1522768491 c:\users\mario\desktop\piscine\grman\coords.h
+	<cmath>
+
+1522768491 source:c:\users\mario\desktop\piscine\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522768491 c:\users\mario\desktop\piscine\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522768491 c:\users\mario\desktop\piscine\grman\grman_couleurs.h
+
+1522768491 c:\users\mario\desktop\piscine\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522768491 source:c:\users\mario\desktop\piscine\grman\widget.cpp
+	"widget.h"
+
+1522768491 source:c:\users\mario\desktop\piscine\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+
+1522777446 c:\users\mario\desktop\piscine\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	"grman/grman.h"
+
+1522777466 source:c:\users\mario\desktop\piscine\graph.cpp
+	"graph.h"
+

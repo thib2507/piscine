@@ -1,0 +1,25 @@
+10
+1 10 50 500 Bengal_tiger.bmp
+2 20 50 450 Leopard.bmp
+3 30 500 450 Chacal.bmp
+4 25 50 400 Panda.bmp
+5 15 150 400 Elephant.bmp
+6 30 350 400 Antelope.bmp
+7 300 50 50 Bamboo.bmp
+8 100 150 50 Fruits.bmp
+9 200 300 50 Leaves.bmp
+10 400 400 50 Grass.bmp
+13
+1 2 1 3 
+2 3 1 5
+3 5 1 1
+4 5 3 1
+5 4 2 10
+6 6 3 10
+7 7 4 100
+8 7 5 150
+9 8 5 50
+10 9 5 150
+11 10 5 250
+12 12 6 100
+13 8 2 30

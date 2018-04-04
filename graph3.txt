@@ -1,0 +1,33 @@
+13
+1 50 50 550 Vautour.bmp
+2 30 400 450 Accacia.bmp
+3 25 450 450 Giraffe.bmp
+4 30 50 400 Gazelle.bmp 
+5 10 300 350 Lion.bmp 
+6 30 50 300 Cheetah.bmp
+7 20 100 300 Zebra.bmp
+8 50 200 270 Hyena.bmp
+9 100 400 300 Wildbeest_dead.bmp
+10 50 50 50 Dung_rolling.bmp
+11 40 100 100 Hare.bmp
+12 500 200 50 Grasses.bmp 
+13 200 450 50 Earthworm.bmp
+18
+1 2 3 20
+2 9 1 20
+3 3 5 15 
+4 9 5 30
+5 4 5 15
+6 7 5 10
+7 4 6 10
+8 7 8 5
+9 9 8 30
+10 11 6 15 
+11 9 13 20
+12 6 10 30
+13 11 10 15
+14 12 11 100
+15 12 4 50
+16 12 7 50 
+17 12 8 100
+18 12 9 100

@@ -1,0 +1,14 @@
+6
+1 100 30 250 herbs.bmp
+2 50 90 250 sauterelle.bmp
+3 30 160 250 mouse.bmp
+4 10 220 250 snake.bmp
+5 5 280 250 hibou.bmp
+6 100 340 200 mushrooms.bmp
+6
+1 1 2 50
+2 2 3 20
+3 3 4 10
+4 4 5 3
+5 5 6 1
+6 6 1 80

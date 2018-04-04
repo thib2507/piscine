@@ -85,18 +85,18 @@ EdgeInterface::EdgeInterface(Vertex& from, Vertex& to)
     m_top_edge.attach_to(to.m_interface->m_top_box);
     m_top_edge.reset_arrow_with_bullet();
 
-    // Une boite pour englober les widgets de réglage associés
+    /// Une boite pour englober les widgets de réglage associés
     m_top_edge.add_child(m_box_edge);
     m_box_edge.set_dim(24,60);
     m_box_edge.set_bg_color(BLANCBLEU);
 
-    // Le slider de réglage de valeur
+    /// Le slider de réglage de valeur
     m_box_edge.add_child( m_slider_weight );
     m_slider_weight.set_range(0.0 , 100.0); // Valeurs arbitraires, à adapter...
     m_slider_weight.set_dim(16,40);
     m_slider_weight.set_gravity_y(grman::GravityY::Up);
 
-    // Label de visualisation de valeur
+    /// Label de visualisation de valeur
     m_box_edge.add_child( m_label_weight );
     m_label_weight.set_gravity_y(grman::GravityY::Down);
 
@@ -207,7 +207,7 @@ void Graph::update()
     for (auto &elt : m_edges)
         elt.second.post_update();
 
-    std::cout<<m_vertices[0].m_interface->m_top_box.get_posx()<<std::endl;
+std::cout<<m_vertices[0].m_interface->m_top_box.get_posx()<<std::endl;
 std::cout<<m_vertices[0].m_interface->m_top_box.get_posy()<<std::endl;
 std::cout<<m_vertices[1].m_interface->m_top_box.get_posy()<<std::endl;
 }

@@ -13,7 +13,7 @@ int main()
 
     /// Un exemple de graphe
     Graph g;
-    g.make_example("graph3.txt");
+    g.make_example("graph1.txt");
 
 
     /// Vous gardez la main sur la "boucle de jeu"
@@ -27,6 +27,7 @@ int main()
         grman::mettre_a_jour();
     }
 
+    g.save_graph();
     grman::fermer_allegro();
 
     return 0;

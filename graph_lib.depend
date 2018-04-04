@@ -94,18 +94,76 @@
 1522750155 source:c:\users\louis cauquelin\desktop\nouveau dossier\grman\widget.cpp
 	"widget.h"
 
-1522852162 source:c:\users\louis cauquelin\desktop\nouveau dossier\graph.cpp
+1522860064 source:c:\users\louis cauquelin\desktop\nouveau dossier\graph.cpp
 	"graph.h"
 
-1522852059 c:\users\louis cauquelin\desktop\nouveau dossier\graph.h
+1522857743 c:\users\louis cauquelin\desktop\nouveau dossier\graph.h
 	<vector>
 	<map>
 	<string>
 	<memory>
 	<fstream>
+	<sstream>
 	"grman/grman.h"
 
-1522852628 source:c:\users\louis cauquelin\desktop\nouveau dossier\main.cpp
+1522860198 source:c:\users\louis cauquelin\desktop\nouveau dossier\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+
+1522860064 source:c:\users\louis cauquelin\documents\github\piscine\graph.cpp
+	"graph.h"
+
+1522857743 c:\users\louis cauquelin\documents\github\piscine\graph.h
+	<vector>
+	<map>
+	<string>
+	<memory>
+	<fstream>
+	<sstream>
+	"grman/grman.h"
+
+1522750154 c:\users\louis cauquelin\documents\github\piscine\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1522750155 c:\users\louis cauquelin\documents\github\piscine\grman\grman_couleurs.h
+
+1522750154 c:\users\louis cauquelin\documents\github\piscine\grman\coords.h
+	<cmath>
+
+1522850901 c:\users\louis cauquelin\documents\github\piscine\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1522750154 source:c:\users\louis cauquelin\documents\github\piscine\grman\coords.cpp
+	"coords.h"
+
+1522750154 source:c:\users\louis cauquelin\documents\github\piscine\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1522750155 source:c:\users\louis cauquelin\documents\github\piscine\grman\widget.cpp
+	"widget.h"
+
+1522860198 source:c:\users\louis cauquelin\documents\github\piscine\main.cpp
 	"grman/grman.h"
 	<iostream>
 	"graph.h"

@@ -78,6 +78,7 @@
 #include <string>
 #include <memory>
 #include <fstream>
+#include <sstream>
 
 
 #include "grman/grman.h"

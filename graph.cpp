@@ -205,6 +205,7 @@ void Graph::make_example(const std::string& nom_fichier)
     int x,y;
     int idVert1, idVert2;
     double weight;
+    int emplacement;
     std::string pic_name;
 
     m_interface = std::make_shared<GraphInterface>(50, 0, 750, 600);
@@ -226,10 +227,17 @@ void Graph::make_example(const std::string& nom_fichier)
 
         for(int i=0; i<nb_vertex; i++)
         {
-            fichier >> idx >> value >> x >> y;
+            fichier >> idx >> value >> x >> y >> emplacement;
             std::getline(fichier,pic_name);
 
+            if(emplacement==1)
             add_interfaced_vertex(idx, value, x, y, pic_name);
+
+            if(emplacement==0)
+            {
+               add_interfaced_vertex(idx, value, x, y, pic_name);
+               supprimer(idx);
+            }
         }
 
         fichier >> nb_edge;
@@ -244,6 +252,7 @@ void Graph::make_example(const std::string& nom_fichier)
             fichier >> idx >> idVert1 >> idVert2 >> weight;
 
             add_interfaced_edge(idx,idVert1,idVert2,weight);
+
         }
 
     }
@@ -256,25 +265,35 @@ void Graph::make_example(const std::string& nom_fichier)
 }
 
 ///Méthode de sauvegarde du graph
+///Méthode de sauvegarde du graph
 void Graph::save_graph()
 {
 
     std::stringstream path;
 
-    path << "graphtest" << m_id << ".txt";
+    path << "graph" << m_id << ".txt";
 
     std::ofstream fichier(path.str(), std::ios::out | std::ios::trunc);
 
     if(fichier)
     {
         fichier << m_id << std::endl;
-        fichier << m_vertices.size() << std::endl;
+        fichier << m_vertices.size() + m_cim.size() << std::endl;
 
         for (auto it = m_vertices.begin(); it!=m_vertices.end(); ++it)
         {
             fichier << it->first << " " << it->second.m_value << " "
                     << it->second.m_interface->m_top_box.get_posx() + 2 << " " <<
-                    it->second.m_interface->m_top_box.get_posy() + 2 <<
+                    it->second.m_interface->m_top_box.get_posy() + 2 << " 1" <<
+                    it->second.m_interface->m_img.get_pic_name() << std::endl;
+
+        }
+
+        for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+        {
+            fichier << it->first << " " << it->second.m_value << " "
+                    << it->second.m_interface->m_top_box.get_posx() + 2 << " " <<
+                    it->second.m_interface->m_top_box.get_posy() + 2 << " 0" <<
                     it->second.m_interface->m_img.get_pic_name() << std::endl;
 
         }

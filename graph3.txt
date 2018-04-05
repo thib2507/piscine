@@ -1,18 +1,18 @@
 3
 13
-0 50 50 550vautour.bmp
-1 30 400 450accacia.bmp
-2 25 450 450giraffe.bmp
-3 30 50 400gazelle.bmp
-4 10 300 350lion.bmp
-5 30 50 300cheetah.bmp
-6 20 100 300zebra.bmp
-7 50 200 270hyena.bmp
-8 100 400 300wildbeest_dead.bmp
-9 50 50 50dung_rolling.bmp
-10 40 100 100hare.bmp
-11 100 200 50grass.bmp
-12 100 450 50earthworm.bmp
+0 50 50 550 1vautour.bmp
+1 30 400 450 1accacia.bmp
+2 25 450 450 1giraffe.bmp
+3 30 50 400 1gazelle.bmp
+4 10 300 350 1lion.bmp
+5 30 50 300 1cheetah.bmp
+6 20 100 300 1zebra.bmp
+7 50 200 270 1hyena.bmp
+8 100 400 300 1wildbeest_dead.bmp
+9 50 50 50 1dung_rolling.bmp
+10 40 100 100 1hare.bmp
+11 100 200 50 1grass.bmp
+12 100 450 50 1earthworm.bmp
 18
 0 1 2 20
 1 8 0 20

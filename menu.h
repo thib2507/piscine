@@ -11,7 +11,7 @@ public:
     menu();
     ~menu();
     void load_menu();
-    int display(Graph g);
+    int display(Graph& g);
 private:
 ///partie a retirer
     grman::WidgetBox m_top_box;

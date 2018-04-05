@@ -358,6 +358,18 @@ int Graph::update()
 
     }
 
+    if(m_interface->m_retour.clicked())
+    {
+        return 2;
+    }
+
+        else
+    {
+        return 1;
+    }
+
+
+
 }
 
 /// Aide à l'ajout de sommets interfacés
@@ -535,3 +547,24 @@ void Graph::supprimer(int idx)
     }
 
 }
+
+void Graph::empty_edges()
+{
+    m_edges.clear();
+}
+
+void Graph::empty_vertice()
+{
+    m_vertices.clear();
+}
+
+void Graph::empty_cim()
+{
+    m_cim.clear();
+}
+
+void Graph::clear_interface()
+{
+    m_interface.reset();
+}
+

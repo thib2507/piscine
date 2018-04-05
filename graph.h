@@ -333,6 +333,11 @@ class Graph
         void make_example(const std::string& nom_fichier);
         void save_graph();
 
+        void empty_edges();
+        void empty_vertice();
+        void empty_cim();
+        void clear_interface();
+
 
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface

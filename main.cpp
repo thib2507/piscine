@@ -13,19 +13,37 @@ int main()
 
     /// Un exemple de graphe
     Graph g;
+    int escape=0;
 
     menu m;
     //
     m.load_menu();
 
-    while ( m.display(g)!=1 )
+    while ( escape !=42 )
     {
-        m.display(g);
+        switch(escape)
+        {
+        case 0:
+            escape = m.display(g);
+            grman::mettre_a_jour();
+            break;
+
+        case 1:
+            escape = g.update();
+            grman::mettre_a_jour();
+            break;
+
+        case 2:
+            g.save_graph();
+            g.empty_edges();
+            g.empty_cim();
+            g.empty_vertice();
+            g.clear_interface();
+            escape = 0;
+            break;
+        }
 
 
-
-
-        grman::mettre_a_jour();
     }
 
      g.make_example("graph1.txt");

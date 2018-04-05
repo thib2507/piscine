@@ -113,10 +113,10 @@
 	<iostream>
 	"graph.h"
 
-1522968503 source:c:\users\louis cauquelin\documents\github\piscine\graph.cpp
+1522971124 source:c:\users\louis cauquelin\documents\github\piscine\graph.cpp
 	"graph.h"
 
-1522968257 c:\users\louis cauquelin\documents\github\piscine\graph.h
+1522970123 c:\users\louis cauquelin\documents\github\piscine\graph.h
 	<vector>
 	<map>
 	<queue>
@@ -493,10 +493,10 @@
 1522862759 source:c:\users\louis cauquelin\desktop\1.5\grman\widget.cpp
 	"widget.h"
 
-1522966758 source:c:\users\louis cauquelin\desktop\1.5\graph.cpp
+1522971124 source:c:\users\louis cauquelin\desktop\1.5\graph.cpp
 	"graph.h"
 
-1522968257 c:\users\louis cauquelin\desktop\1.5\graph.h
+1522970123 c:\users\louis cauquelin\desktop\1.5\graph.h
 	<vector>
 	<map>
 	<queue>
@@ -523,146 +523,4 @@
 	<iostream>
 	"graph.h"
 	"menu.h"
-
-1522968503 source:c:\users\louis cauquelin\desktop\1.5 - copie\graph.cpp
-	"graph.h"
-
-1522968257 c:\users\louis cauquelin\desktop\1.5 - copie\graph.h
-	<vector>
-	<map>
-	<queue>
-	<stack>
-	<string>
-	<memory>
-	<fstream>
-	<sstream>
-	"grman/grman.h"
-
-1522862759 c:\users\louis cauquelin\desktop\1.5 - copie\grman\grman.h
-	<allegro.h>
-	<string>
-	"grman_couleurs.h"
-	"coords.h"
-	"widget.h"
-
-1522750155 c:\users\louis cauquelin\desktop\1.5 - copie\grman\grman_couleurs.h
-
-1522750154 c:\users\louis cauquelin\desktop\1.5 - copie\grman\coords.h
-	<cmath>
-
-1522968257 c:\users\louis cauquelin\desktop\1.5 - copie\grman\widget.h
-	"grman.h"
-	<iostream>
-	<string>
-	<vector>
-	<algorithm>
-	<allegro.h>
-
-1522750154 source:c:\users\louis cauquelin\desktop\1.5 - copie\grman\coords.cpp
-	"coords.h"
-
-1522871905 source:c:\users\louis cauquelin\desktop\1.5 - copie\grman\grman.cpp
-	<cmath>
-	<unordered_map>
-	<unordered_set>
-	<utility>
-	<string>
-	<iostream>
-	<regex>
-	"grman.h"
-	<allegro.h>
-	<png.h>
-	<loadpng.h>
-	<jpgalleg.h>
-
-1522862759 source:c:\users\louis cauquelin\desktop\1.5 - copie\grman\widget.cpp
-	"widget.h"
-
-1522929296 source:c:\users\louis cauquelin\desktop\1.5 - copie\main.cpp
-	"grman/grman.h"
-	<iostream>
-	"graph.h"
-	"menu.h"
-
-1522928005 c:\users\louis cauquelin\desktop\1.5 - copie\menu.h
-	"grman/grman.h"
-	"grman/widget.h"
-	"graph.h"
-
-1522928415 source:c:\users\louis cauquelin\desktop\1.5 - copie\menu.cpp
-	"menu.h"
-	"grman/widget.h"
-	"grman/grman.h"
-	"graph.h"
-
-1522968503 source:c:\users\louis cauquelin\desktop\1.5 - version couleur\graph.cpp
-	"graph.h"
-
-1522968257 c:\users\louis cauquelin\desktop\1.5 - version couleur\graph.h
-	<vector>
-	<map>
-	<queue>
-	<stack>
-	<string>
-	<memory>
-	<fstream>
-	<sstream>
-	"grman/grman.h"
-
-1522862759 c:\users\louis cauquelin\desktop\1.5 - version couleur\grman\grman.h
-	<allegro.h>
-	<string>
-	"grman_couleurs.h"
-	"coords.h"
-	"widget.h"
-
-1522750155 c:\users\louis cauquelin\desktop\1.5 - version couleur\grman\grman_couleurs.h
-
-1522750154 c:\users\louis cauquelin\desktop\1.5 - version couleur\grman\coords.h
-	<cmath>
-
-1522968257 c:\users\louis cauquelin\desktop\1.5 - version couleur\grman\widget.h
-	"grman.h"
-	<iostream>
-	<string>
-	<vector>
-	<algorithm>
-	<allegro.h>
-
-1522750154 source:c:\users\louis cauquelin\desktop\1.5 - version couleur\grman\coords.cpp
-	"coords.h"
-
-1522871905 source:c:\users\louis cauquelin\desktop\1.5 - version couleur\grman\grman.cpp
-	<cmath>
-	<unordered_map>
-	<unordered_set>
-	<utility>
-	<string>
-	<iostream>
-	<regex>
-	"grman.h"
-	<allegro.h>
-	<png.h>
-	<loadpng.h>
-	<jpgalleg.h>
-
-1522862759 source:c:\users\louis cauquelin\desktop\1.5 - version couleur\grman\widget.cpp
-	"widget.h"
-
-1522929296 source:c:\users\louis cauquelin\desktop\1.5 - version couleur\main.cpp
-	"grman/grman.h"
-	<iostream>
-	"graph.h"
-	"menu.h"
-
-1522928005 c:\users\louis cauquelin\desktop\1.5 - version couleur\menu.h
-	"grman/grman.h"
-	"grman/widget.h"
-	"graph.h"
-
-1522928415 source:c:\users\louis cauquelin\desktop\1.5 - version couleur\menu.cpp
-	"menu.h"
-	"grman/widget.h"
-	"grman/grman.h"
-	"graph.h"
 

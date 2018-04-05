@@ -275,12 +275,14 @@ class GraphInterface
         grman::WidgetButton m_ajout;
         grman::WidgetButton m_sup;
         grman::WidgetButton m_fcon;//fortement connexe
-         grman::WidgetButton m_kcon;
+        grman::WidgetButton m_kcon;
+        grman::WidgetButton m_supp_couleur;
         grman::WidgetText retour;
         grman::WidgetText ajout;
         grman::WidgetText sup;
         grman::WidgetText fcon;
         grman::WidgetText kcon;
+        grman::WidgetText sup_couleur;
 
 
 

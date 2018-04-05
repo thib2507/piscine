@@ -361,6 +361,22 @@ int Graph::update()
     if(m_interface->m_fcon.clicked())
     {
         fortement_connexe();
+        m_interface->m_top_box.add_child(m_interface->m_supp_couleur);
+        m_interface->m_supp_couleur.set_frame(10,630,75,75);
+        m_interface->m_supp_couleur.set_bg_color(ROUGECLAIR);
+        m_interface->m_supp_couleur.add_child(m_interface->sup_couleur);
+        m_interface->sup_couleur.set_message("supprimer couleur");
+    }
+
+    if(m_interface->m_supp_couleur.clicked())
+    {
+        for (auto it = m_vertices.begin(); it!=m_vertices.end(); it++)
+        {
+            it->second.m_interface->m_top_box.set_bg_color(-1);
+
+        }
+
+        m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
     }
 
     if(m_interface->m_retour.clicked())

@@ -161,11 +161,11 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_sup.set_frame(10,95,75,75);
     m_sup.set_bg_color(BLEU);
 
-      m_top_box.add_child(m_fcon);
+    m_top_box.add_child(m_fcon);
     m_fcon.set_frame(10,265,75,75);
     m_fcon.set_bg_color(BLEU);
 
-      m_top_box.add_child(m_kcon);
+    m_top_box.add_child(m_kcon);
     m_kcon.set_frame(10,350,75,75);
     m_kcon.set_bg_color(BLEU);
 
@@ -231,12 +231,12 @@ void Graph::make_example(const std::string& nom_fichier)
             std::getline(fichier,pic_name);
 
             if(emplacement==1)
-            add_interfaced_vertex(idx, value, x, y, pic_name);
+                add_interfaced_vertex(idx, value, x, y, pic_name);
 
             if(emplacement==0)
             {
-               add_interfaced_vertex(idx, value, x, y, pic_name);
-               supprimer(idx);
+                add_interfaced_vertex(idx, value, x, y, pic_name);
+                supprimer(idx);
             }
         }
 
@@ -358,12 +358,17 @@ int Graph::update()
 
     }
 
+    if(m_interface->m_fcon.clicked())
+    {
+        fortement_connexe();
+    }
+
     if(m_interface->m_retour.clicked())
     {
         return 2;
     }
 
-        else
+    else
     {
         return 1;
     }
@@ -568,3 +573,454 @@ void Graph::clear_interface()
     m_interface.reset();
 }
 
+int Graph::check_voisins(int idx, std::vector<int> marque)
+{
+    std::vector<int> sommets_potentiels;
+    int nbarete;
+    int S1, S2,indice,poids;
+    bool est_present;
+
+    //permet de s'assurrer de ne pas créer un arc avec un sommet détruit
+    bool add_edge_ok = false;
+
+    std::stringstream path;
+
+    path << "ref" << m_id << ".txt";
+
+    std::ifstream fichier(path.str()); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier>>nbarete;
+
+        //on parcours toutes les arêtes du fichier
+        for(int i=0; i<nbarete; i++)
+        {
+            fichier>>S1>>S2>>indice>>poids;
+
+            if(S1==idx)
+            {
+                sommets_potentiels.push_back(S2);
+            }
+
+        }
+
+        if(sommets_potentiels.size() == 0)
+            return -1;
+
+        if(sommets_potentiels.size() != 0)
+        {
+
+
+            for(int i=0; i<sommets_potentiels.size(); i++)
+            {
+                est_present=false;
+
+                for(int j=0; j<marque.size(); j++)
+                {
+                    //std::cout << "marque : " << marque[j] << " et sommet potentiel : " << sommets_potentiels[i] << std::endl;
+                    if(sommets_potentiels[i] == marque[j])
+                        est_present=true;
+                }
+
+                if(!est_present)
+                    return sommets_potentiels[i];
+            }
+        }
+
+
+
+    }
+
+
+    else
+    {
+        std::cout << "file " << path.str() << " could not be found";
+    }
+
+    fichier.close();
+
+    return -1;
+
+
+}
+
+int Graph::check_voisin_inverse(int idx, std::vector<int> marque)
+{
+    std::vector<int> sommets_potentiels;
+    int nbarete;
+    int S1, S2,indice,poids;
+    bool est_present;
+
+    //permet de s'assurrer de ne pas créer un arc avec un sommet détruit
+    bool add_edge_ok = false;
+
+    std::stringstream path;
+
+    path << "ref" << m_id << ".txt";
+
+    std::ifstream fichier(path.str()); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier>>nbarete;
+
+        //on parcours toutes les arêtes du fichier
+        for(int i=0; i<nbarete; i++)
+        {
+            fichier>>S1>>S2>>indice>>poids;
+
+            if(S2==idx)
+            {
+                sommets_potentiels.push_back(S1);
+            }
+
+        }
+
+        if(sommets_potentiels.size() == 0)
+            return -1;
+
+        if(sommets_potentiels.size() != 0)
+        {
+
+
+            for(int i=0; i<sommets_potentiels.size(); i++)
+            {
+                est_present=false;
+
+                for(int j=0; j<marque.size(); j++)
+                {
+                    //std::cout << "marque : " << marque[j] << " et sommet potentiel : " << sommets_potentiels[i] << std::endl;
+                    if(sommets_potentiels[i] == marque[j])
+                        est_present=true;
+                }
+
+                if(!est_present)
+                    return sommets_potentiels[i];
+            }
+        }
+
+
+
+    }
+
+
+    else
+    {
+        std::cout << "file " << path.str() << " could not be found";
+    }
+
+    fichier.close();
+
+    return -1;
+
+
+}
+
+void Graph::fortement_connexe()
+{
+    int nb_etapes=1;
+    int actuel;
+    int next, stock;
+    int tour=0;
+    bool ok;
+    std::map<int,int> denominateur;
+    std::map<int,int> numerateur;
+    std::stack<int> predecesseur;
+    std::stack<int> stack_dfs;
+    std::queue<int> file_priorite;
+    std::vector<int> marque_e1;
+    std::vector<int> marque_e2;
+
+    //initialisation de la map numérateur
+    for(int i=0; i<m_vertices.size(); i++)
+    {
+        numerateur.insert(std::pair <int,int> (i,0));
+    }
+
+
+    ///DEBUT ETAPE 1 ----------------------------------------------------------------------------///
+
+    predecesseur.push(m_vertices.begin()->first);
+    actuel=m_vertices.begin()->first;
+    marque_e1.push_back(actuel);
+    numerateur.at(actuel) = nb_etapes;
+    nb_etapes++;
+
+    while(nb_etapes <=((m_vertices.size()*2)))
+    {
+        while(check_voisins(actuel,marque_e1)!=-1)
+        {
+            std::cout<<"actuel"<<actuel<<std::endl;
+
+            /* for(int i=0; i<marque_e1.size();i++)
+             {
+                 std::cout << "marques : " << marque_e1[i] << std::endl;
+             }*/
+
+            next=check_voisins(actuel,marque_e1);
+            std::cout << "next"<<next << std::endl;
+            predecesseur.push(next);
+            marque_e1.push_back(next);
+            actuel=next;
+            numerateur.at(actuel) = nb_etapes;
+            nb_etapes++;
+
+        }
+
+        std::cout << "fuck" << std::endl;
+
+
+        while(check_voisins(actuel,marque_e1)==-1 && nb_etapes <=((m_vertices.size()*2)))
+        {
+            if(numerateur.at(actuel)==0)
+            {
+                numerateur.at(actuel) = nb_etapes;
+                nb_etapes++;
+                denominateur.insert(std::pair<int,int> (actuel,nb_etapes));
+                nb_etapes++;
+            }
+
+            if(numerateur.at(actuel)!=0)
+            {
+                denominateur.insert(std::pair<int,int> (actuel,nb_etapes));
+                nb_etapes++;
+            }
+
+            predecesseur.pop();
+//std::cout<<"actuel"<<actuel<<std::endl;
+            if(predecesseur.empty()!=true)
+                actuel=predecesseur.top();
+
+
+            if(predecesseur.empty())
+            {
+                actuel = chercher_nouveau_sommet(marque_e1);
+                marque_e1.push_back(actuel);
+                predecesseur.push(actuel);
+                numerateur.at(actuel) = nb_etapes;
+                nb_etapes++;
+            }
+
+        }
+
+    }
+
+    std::cout << "----------------LISTE DES DENOMINATEURS :" << std::endl;
+    for (auto it = denominateur.begin(); it!=denominateur.end(); ++it)
+    {
+        std::cout <<  it->second << "      " << it->first << std::endl;
+
+
+    }
+
+    ///FIN ETAPE 1 ----------------------------------------------------------------------------///
+
+
+    ///DEBUT ETAPE 2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!///
+
+    while(!denominateur.empty())
+    {
+
+        ///DEBUT TRI PAR ORDRE DECROISSANT DES DENOMINATEURS-----------------------------------------
+        stock=0;
+
+        for (auto it = denominateur.begin(); it!=denominateur.end(); ++it)
+        {
+            if(it->second >= stock)
+                stock = it->second;
+
+        }
+
+        for (auto it = denominateur.begin(); it!=denominateur.end(); ++it)
+        {
+            if(it->second == stock)
+            {
+                file_priorite.push(it->first);
+                denominateur.erase(it);
+            }
+        }
+    }
+
+    /*   std::cout << std::endl<< std::endl << "----------------FILE PRIORITE :" << std::endl;
+          int j = file_priorite.size();
+          for(int i=0; i< j; i++)
+          {
+              std::cout << file_priorite.front() << std::endl;
+              file_priorite.pop();
+          }*/
+
+    ///FIN TRI PAR ORDRE DECROISSANT DES DENOMINATEURS---------------------------------
+
+
+    while(marque_e2.size() != m_vertices.size())
+    {
+        // std::cout << "check voisin : " << check_voisin_inverse(3,marque_e2) <<std::endl <<std::endl<<std::endl<<std::endl;
+
+        ok = true;
+
+        //On verifie que le sommet défilé n'est pas déjà marqué
+        for(int i=0; i<marque_e2.size(); i++)
+        {
+            //std::cout << "file de priorite : " << file_priorite.front() << "    marque e2 :  " << marque_e2[i] << std::endl;
+            if(file_priorite.front() == marque_e2[i])
+                ok = false;
+        }
+
+        if(ok == true)
+        {
+            actuel = file_priorite.front();
+            stack_dfs.push(actuel);
+            file_priorite.pop();
+            marque_e2.push_back(actuel);
+            colorer(actuel,tour);
+
+            while(!stack_dfs.empty())
+            {
+                actuel = stack_dfs.top();
+                std::cout << "actuel : " << actuel<< std::endl;
+
+                stack_dfs.pop();
+                next = check_voisin_inverse(actuel,marque_e2);
+                std::cout << "next : " << next<< std::endl;
+
+                if(next != -1)
+                {
+                    marque_e2.push_back(next);
+                    stack_dfs.push(next);
+                }
+
+
+                colorer(actuel,tour);
+            }
+
+            tour++;
+
+            std::cout << std::endl << std::endl << std::endl << std::endl;
+        }
+
+
+
+        if(ok==false)
+            file_priorite.pop();
+
+    }
+
+    ///FIN ETAPE 2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!///
+
+
+}
+
+int Graph::chercher_nouveau_sommet(std::vector<int> marque)
+{
+
+    std::vector<int> sommets_potentiels;
+    bool est_present;
+
+    for (auto it = m_vertices.begin(); it!=m_vertices.end(); it++)
+    {
+
+        est_present=false;
+
+        for(int j=0; j<marque.size(); j++)
+        {
+            //std::cout << "marque : " << marque[j] << " et sommet potentiel : " << it->first << std::endl;
+            if(it->first == marque[j])
+                est_present=true;
+        }
+
+        if(!est_present)
+            sommets_potentiels.push_back(it->first);
+
+    }
+
+    if(sommets_potentiels.size()!=0)
+        return sommets_potentiels.front();
+
+
+
+
+    /*for(auto it = m_vertices.begin(); it!=m_vertices.end(); ++it)
+                {
+                    for (int i =0; i < marque_e1.size(); i++)
+                    {
+                        if(it->first != marque_e1[i])
+                        {
+                            actuel = it->first;
+                            std::cout<<"test"<<actuel<<std::endl;
+                        }
+                        //std::cout << actuel << std::endl;
+
+
+                    }
+
+                }
+
+                marque_e1.push_back(actuel);*/
+}
+
+void Graph::colorer(int idx, int tour)
+{
+    if(tour==0)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(BLANCBLEU);
+
+    if(tour==1)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(FUCHSIA);
+
+    if(tour==2)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(BLANCROSE);
+
+    if(tour==3)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(FUCHSIACLAIR);
+
+    if(tour==4)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(MARRONCLAIR);
+
+    if(tour==5)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(VERTCLAIR);
+
+    if(tour==6)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(CYAN);
+
+    if(tour==7)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(KAKI);
+
+    if(tour==8)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(ROUGECLAIR);
+
+    if(tour==9)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(ORANGECLAIR);
+
+    if(tour==10)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(BLANCBLEU);
+
+    if(tour==11)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(SABLE);
+
+    if(tour==12)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(JAUNESOMBRE);
+
+    if(tour==13)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(CYANSOMBRE);
+
+    if(tour==14)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(VERTFLUOCLAIR);
+
+    if(tour==15)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(VIOLETCLAIR);
+
+    if(tour==16)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(ROSESOMBRE);
+
+    if(tour==17)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(BLEUSOMBRE);
+
+    if(tour==18)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(KAKISOMBRE);
+
+    if(tour==19)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(GRISSOMBRE);
+
+    if(tour==20)
+        m_vertices[idx].m_interface->m_top_box.set_bg_color(VIOLETSOMBRE);
+
+
+}

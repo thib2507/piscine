@@ -75,6 +75,8 @@
 
 #include <vector>
 #include <map>
+#include <queue>
+#include <stack>
 #include <string>
 #include <memory>
 #include <fstream>
@@ -342,7 +344,12 @@ class Graph
 
         /// La méthode update à appeler dans la boucle de jeu pour les graphes avec interface
         int update();
+        int check_voisins(int idx, std::vector<int> marque);
+        int check_voisin_inverse(int idx, std::vector<int> m_marque);
 
+        void fortement_connexe();
+        void colorer(int idx, int tour);
+        int chercher_nouveau_sommet(std::vector<int> marque);
 
 
 };

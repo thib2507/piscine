@@ -1,7 +1,7 @@
 1
 6
 0 100 100 456 1grass.bmp
-1 50 96 192 1sauterelle.bmp
+1 21.4286 81 152 1sauterelle.bmp
 2 30 356 64 1mouse.bmp
 3 10 680 41 1snake.bmp
 4 5 668 457 1hibou.bmp

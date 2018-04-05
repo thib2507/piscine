@@ -28,7 +28,7 @@ int main()
         grman::mettre_a_jour();
     }
 
-     g.make_example("graph1.txt");
+     //g.make_example("graph1.txt");
     /// Vous gardez la main sur la "boucle de jeu"
     /// ( contrairement à des frameworks plus avancés )
    while ( !key[KEY_ESC] )

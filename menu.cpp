@@ -78,6 +78,15 @@ g.update();
 return 1;
   }
 
+  if ( m_bouton3.clicked() ){
+
+g.make_example("graph2.txt");
+g.update();
+return 1;
+  }
+
+
+
 
 }
 

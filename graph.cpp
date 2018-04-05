@@ -161,6 +161,14 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_sup.set_frame(10,95,75,75);
     m_sup.set_bg_color(BLEU);
 
+      m_top_box.add_child(m_fcon);
+    m_fcon.set_frame(10,265,75,75);
+    m_fcon.set_bg_color(BLEU);
+
+      m_top_box.add_child(m_kcon);
+    m_kcon.set_frame(10,350,75,75);
+    m_kcon.set_bg_color(BLEU);
+
     m_ajout.add_child(ajout);
     ajout.set_message("ajouter");
 
@@ -169,6 +177,12 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 
     m_retour.add_child(retour);
     retour.set_message("menu");
+
+    m_fcon.add_child(fcon);
+    fcon.set_message("forte connexite");
+
+    m_kcon.add_child(kcon);
+    kcon.set_message("k-connexite");
 
 
 

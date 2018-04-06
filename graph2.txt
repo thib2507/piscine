@@ -1,16 +1,16 @@
 2
 10
-0 20 41 207 1leopard.bmp
-1 30 601 225 1chacal.bmp
-2 25 17 403 1panda.bmp
-3 0 329 295 1elephant.bmp
-4 30 755 412 1antelope.bmp
-5 100 18 606 1bamboo.bmp
-6 100 206 603 1fruits.bmp
-7 100 396 599 1leaves.bmp
-8 68.5714 684 580 1grass.bmp
-9 10 327 10 1bengal_tiger.bmp
-12
+0 20 347 3 1bengal_tiger.bmp
+1 30 21 174 1leopard.bmp
+2 25 706 177 1chacal.bmp
+3 0 16 367 1panda.bmp
+4 30 292 285 1elephant.bmp
+5 100 721 390 1antelope.bmp
+6 64.2857 67 589 1bamboo.bmp
+7 100 343 583 1fruits.bmp
+8 68.5714 707 580 1leaves.bmp
+9 10 524 573 1grass.bmp
+15
 0 1 0 3
 1 2 0 5
 2 4 0 1
@@ -23,3 +23,6 @@
 9 8 4 100
 10 9 4 100
 11 9 5 100
+12 7 1 30
+13 0 1 10
+14 1 2 8

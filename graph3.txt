@@ -1,19 +1,22 @@
 3
-13
-0 50 50 550 1vautour.bmp
-1 30 400 450 1accacia.bmp
-2 25 450 450 1giraffe.bmp
-3 30 50 400 1gazelle.bmp
-4 10 300 350 1lion.bmp
-5 30 50 300 1cheetah.bmp
-6 20 100 300 1zebra.bmp
-7 50 200 270 1hyena.bmp
-8 100 400 300 1wildbeest_dead.bmp
-9 50 50 50 1dung_rolling.bmp
-10 40 100 100 1hare.bmp
-11 100 200 50 1grass.bmp
-12 100 450 50 1earthworm.bmp
-18
+16
+0 50 361 27 1vautour.bmp
+1 30 775 59 1accacia.bmp
+2 25 557 40 1giraffe.bmp
+3 30 3 3 1gazelle.bmp
+4 10 508 248 1lion.bmp
+5 30 25 248 1cheetah.bmp
+6 0 3 364 1zebra.bmp
+7 50 575 428 1hyena.bmp
+8 100 775 296 1wildbeest_dead.bmp
+9 50 19 597 1dung_rolling.bmp
+10 40 178 485 1hare.bmp
+11 100 343 617 1grass.bmp
+12 100 758 581 1earthworm.bmp
+13 50 544 607 1croco.bmp
+14 30 198 144 1cougar.bmp
+15 20 359 388 1python.bmp
+25
 0 1 2 20
 1 8 0 20
 2 2 4 15
@@ -32,3 +35,10 @@
 15 11 6 50
 16 11 7 100
 17 11 8 100
+18 15 5 40
+19 5 4 20
+20 4 7 40
+21 5 13 15
+22 13 14 15
+23 14 15 20
+24 7 5 15

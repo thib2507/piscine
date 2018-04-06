@@ -342,8 +342,19 @@ int Graph::update()
 
     if(m_interface->m_ajout.clicked())
     {
+        int idx;
+        if(m_cim.empty()==false)
+    {
+        std::cout << "Sommets pouvant etre ajoutes :" << std::endl;
+        //on affiche tout les sommets présent dans le cim
+        for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+        {
+            std::cout<<"- " <<it->first<<std::endl;
+        }
 
-        ajout();
+        std::cout << "--> ";
+        std::cin >> idx;}
+        ajout(idx);
 
     }
 
@@ -377,6 +388,12 @@ int Graph::update()
         }
 
         m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
+    }
+    if(m_interface->m_kcon.clicked())
+        {
+m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
+        k_connexite();
+
     }
 
     if(m_interface->m_retour.clicked())
@@ -435,9 +452,9 @@ void Graph::add_interfaced_edge(int idx, int id_vert1, int id_vert2, double weig
     m_vertices[id_vert2].m_in.push_back(idx);
 }
 
-void Graph::ajout()
+void Graph::ajout(int idx)
 {
-    int idx;
+
     int nbarete;
     int S1, S2,indice,poids;
 
@@ -449,19 +466,12 @@ void Graph::ajout()
     path << "ref" << m_id << ".txt";
 
 
-    std::cout << "Sommets pouvant etre ajoutes :" << std::endl;
+
 
     //on verifie que le cim n'est pas vide
     if(m_cim.empty()==false)
     {
-        //on affiche tout les sommets présent dans le cim
-        for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
-        {
-            std::cout<<"- " <<it->first<<std::endl;
-        }
 
-        std::cout << "--> ";
-        std::cin >> idx;
 
         //on ajoute le sommet
         add_interfaced_vertex(idx,m_cim[idx].m_value,m_cim[idx].m_interface->m_top_box.get_posx()+2,
@@ -638,6 +648,13 @@ int Graph::check_voisins(int idx, std::vector<int> marque)
                         est_present=true;
                 }
 
+
+                 for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                {
+                    if(sommets_potentiels[i] == it-> first)
+                        est_present=true;
+                }
+
                 if(!est_present)
                     return sommets_potentiels[i];
             }
@@ -709,6 +726,12 @@ int Graph::check_voisin_inverse(int idx, std::vector<int> marque)
                         est_present=true;
                 }
 
+                for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                {
+                    if(sommets_potentiels[i] == it-> first)
+                        est_present=true;
+                }
+
                 if(!est_present)
                     return sommets_potentiels[i];
             }
@@ -747,10 +770,11 @@ void Graph::fortement_connexe()
     std::vector<int> marque_e2;
 
     //initialisation de la map numérateur
-    for(int i=0; i<m_vertices.size(); i++)
-    {
-        numerateur.insert(std::pair <int,int> (i,0));
-    }
+ for(auto it=m_vertices.begin();it!=m_vertices.end();it++)
+        {
+            numerateur.insert(std::pair <int,int> (it->first,0));
+
+        }
 
 
     ///DEBUT ETAPE 1 ----------------------------------------------------------------------------///
@@ -1040,3 +1064,200 @@ void Graph::colorer(int idx, int tour)
 
 
 }
+
+int Graph::k_connexite()
+{
+
+int k=0;
+for(int i=0;i<m_vertices.size();i++){
+
+    supprimer(i);
+    std::cout<<"verif connexite"<<verif_connexite(m_vertices.begin()->first)<<std::endl;
+    std::cout<<m_cim.size()<<"size cim apres supp"<<std::endl;
+    if(verif_connexite(m_vertices.begin()->first)==0){
+        std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
+        //rest(100000);
+        ajout(i);
+        return 0;
+    }
+    else
+    {
+
+        ajout(i);
+
+    }
+
+}
+
+k++;
+
+for(int i=0;i<m_vertices.size();i++){
+        for(int j=0;j<m_vertices.size();j++)
+            {
+    supprimer(i);
+    supprimer(j);
+    if(verif_connexite(m_vertices.begin()->first)==0){
+        std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
+        //rest(1000);
+        ajout(i);
+        ajout(j);
+        return 0;
+
+    }
+    else
+    {
+        ajout(i);
+        ajout(j);
+    }
+}
+}
+ k++;
+
+
+
+
+}
+
+void Graph::vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& indice_connexite, std::vector<int>& marque)
+{
+    std::vector<int> sommets_potentiels;
+    std::vector<int> sommets_voisins;
+    int nbarete;
+    int S1, S2,indice,poids;
+    bool est_present;
+
+    //permet de s'assurrer de ne pas créer un arc avec un sommet détruit
+    bool add_edge_ok = false;
+
+    std::stringstream path;
+
+    path << "ref" << m_id << ".txt";
+
+    std::ifstream fichier(path.str()); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier>>nbarete;
+
+        //on parcours toutes les arêtes du fichier
+        for(int i=0; i<nbarete; i++)
+        {
+            fichier>>S1>>S2>>indice>>poids;
+
+            if(S1==idx)
+            {
+                sommets_potentiels.push_back(S2);
+            }
+
+            if(S2==idx)
+            {
+                sommets_potentiels.push_back(S1);
+            }
+
+        }
+
+        std::cout << "liste sommets potentiels : "<< std::endl;
+
+        /*for(int i=0; i<sommets_potentiels.size();i++)
+            std::cout << sommets_potentiels[i] << std::endl;*/
+
+     /*   if(sommets_potentiels.size() == 0)
+            return -1;*/
+
+        if(sommets_potentiels.size() != 0)
+        {
+
+
+            for(int i=0; i<sommets_potentiels.size(); i++)
+            {
+                est_present=false;
+
+                for(int j=0; j<marque.size(); j++)
+                {
+                    //std::cout << "marque : " << marque[j] << " et sommet potentiel : " << sommets_potentiels[i] << std::endl;
+                    if(sommets_potentiels[i] == marque[j])
+                        est_present=true;
+                }
+
+                 for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                {
+                    if(sommets_potentiels[i] == it->first)
+                        est_present=true;
+
+
+                }
+
+
+                if(!est_present)
+                    {
+                        sommets_voisins.push_back(sommets_potentiels[i]);
+                    }
+            }
+
+            for(int i=0;i<sommets_voisins.size();i++)
+            {
+                marque.push_back(sommets_voisins[i]);
+                pile.push(sommets_voisins[i]);
+
+                indice_connexite.at(sommets_voisins[i])=indice_connexite.at(idx);
+            }
+        }
+
+
+    std::cout<<"MAP ------------------------------------- "  << std::endl<< std::endl<< std::endl;
+
+    for (auto it = indice_connexite.begin(); it!=indice_connexite.end(); it++)
+    {
+
+
+            std::cout<<"indice sommet : "<< it->first << "    indice connexite : " << it->second << std::endl;
+
+
+    }
+
+
+
+    }
+
+
+    else
+    {
+        std::cout << "file " << path.str() << " could not be found";
+    }
+
+    fichier.close();
+
+}
+
+
+int Graph::verif_connexite(int actuel)
+{
+    std::vector<int> marque;
+    std::stack<int> pile;
+    int indice;
+    std::map<int, int> connexite;
+    for(auto it=m_vertices.begin();it!=m_vertices.end();it++)
+        {
+        connexite.insert(std::pair <int,int> (it->first,it->first));
+
+        }
+        marque.push_back(actuel);
+    pile.push(actuel);
+    while(!pile.empty())
+    {
+        actuel=pile.top();
+        pile.pop();
+        vecteur_voisins(actuel,pile,connexite,marque);
+    }
+    indice=connexite.begin()->second;
+    for (auto it = connexite.begin(); it!=connexite.end(); it++)
+    {
+        if(it->second!=indice)
+        {
+            std::cout<<"pas connexe"<<std::endl;
+            return 0;
+            }
+    }
+    std::cout<<"connexe"<<std::endl;
+    return 1;
+}
+

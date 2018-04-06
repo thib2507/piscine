@@ -3,6 +3,7 @@
 
 
 
+
 /**************************************************************
     Ici sont proposées 3 classes fondamentales
             Vertex (=Sommet)
@@ -332,7 +333,7 @@ class Graph
 
          ///METHODE CHARGEMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        void ajout();
+        void ajout(int idx);
         void supprimer(int idx);
         void make_example(const std::string& nom_fichier);
         void save_graph();
@@ -352,6 +353,9 @@ class Graph
         void fortement_connexe();
         void colorer(int idx, int tour);
         int chercher_nouveau_sommet(std::vector<int> marque);
+        int k_connexite();
+        int verif_connexite(int actuel);
+        void vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& indice_connexite, std::vector<int>& marque);
 
 
 };

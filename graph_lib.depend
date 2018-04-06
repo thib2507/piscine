@@ -524,3 +524,74 @@
 	"graph.h"
 	"menu.h"
 
+1523017260 source:c:\users\thiba\github\exist\graph.cpp
+	"graph.h"
+
+1523012437 c:\users\thiba\github\exist\graph.h
+	<vector>
+	<map>
+	<queue>
+	<stack>
+	<string>
+	<memory>
+	<fstream>
+	<sstream>
+	"grman/grman.h"
+
+1523003897 c:\users\thiba\github\exist\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1523003897 c:\users\thiba\github\exist\grman\grman_couleurs.h
+
+1523003897 c:\users\thiba\github\exist\grman\coords.h
+	<cmath>
+
+1523003897 c:\users\thiba\github\exist\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523003897 source:c:\users\thiba\github\exist\grman\coords.cpp
+	"coords.h"
+
+1523003897 source:c:\users\thiba\github\exist\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523003897 source:c:\users\thiba\github\exist\grman\widget.cpp
+	"widget.h"
+
+1523003897 source:c:\users\thiba\github\exist\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+	"menu.h"
+
+1523003897 c:\users\thiba\github\exist\menu.h
+	"grman/grman.h"
+	"grman/widget.h"
+	"graph.h"
+
+1523003897 source:c:\users\thiba\github\exist\menu.cpp
+	"menu.h"
+	"grman/widget.h"
+	"grman/grman.h"
+	"graph.h"
+

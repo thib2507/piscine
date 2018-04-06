@@ -4,7 +4,7 @@
 1 30 21 174 1leopard.bmp
 2 25 706 177 1chacal.bmp
 3 0 16 367 1panda.bmp
-4 30 292 285 1elephant.bmp
+4 30 447 328 1elephant.bmp
 5 100 721 390 1antelope.bmp
 6 64.2857 67 589 1bamboo.bmp
 7 100 343 583 1fruits.bmp

@@ -386,6 +386,7 @@ int Graph::update()
             it->second.m_interface->m_top_box.set_bg_color(-1);
 
         }
+        calcul(true);
 
         m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
     }
@@ -411,7 +412,7 @@ m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
 }
 
 /// Aide à l'ajout de sommets interfacés
-void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name, int pic_idx )
+void Graph::add_interfaced_vertex(int idx, double value, int x, int y, std::string pic_name, int pic_idx)
 {
     if ( m_vertices.find(idx)!=m_vertices.end() )
     {
@@ -1076,7 +1077,6 @@ for(int i=0;i<m_vertices.size();i++){
     std::cout<<m_cim.size()<<"size cim apres supp"<<std::endl;
     if(verif_connexite(m_vertices.begin()->first)==0){
         std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
-        //rest(100000);
         ajout(i);
         return 0;
     }
@@ -1098,7 +1098,6 @@ for(int i=0;i<m_vertices.size();i++){
     supprimer(j);
     if(verif_connexite(m_vertices.begin()->first)==0){
         std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
-        //rest(1000);
         ajout(i);
         ajout(j);
         return 0;
@@ -1261,3 +1260,296 @@ int Graph::verif_connexite(int actuel)
     return 1;
 }
 
+int Graph::sucesseur(int sommet)
+{
+std::map<int,int> sommets_potentiels;
+    std::stringstream path;
+    bool estpresent;
+    int nbarete;
+    int S1, S2,indice,poids;
+
+    float k=0.0001;
+
+    path << "ref" << m_id << ".txt";
+
+    std::ifstream fichier(path.str()); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier>>nbarete;
+
+        //on parcours toutes les arêtes du fichier
+        for(int i=0; i<nbarete; i++)
+        {
+            fichier>>S1>>S2>>indice>>poids;
+            std::cout<<"s1:"<<S1<<"S2:"<<S2<<std::endl;
+
+            if(S1==sommet)
+            {
+                sommets_potentiels.insert(std::pair<int,int> (S2,poids));
+            }
+
+        }
+    }
+if(sommets_potentiels.size()!=0){
+
+
+for(auto it=sommets_potentiels.begin();it!=sommets_potentiels.end();it++){
+    estpresent=false;
+    for(auto it1=m_cim.begin();it1!=m_cim.end();it1++)
+        {
+        if(it->first==it1->first)
+            estpresent=true;
+
+
+        }
+        if(estpresent==true){
+            sommets_potentiels.erase(it->first);
+}
+}
+
+}
+
+for(auto it=sommets_potentiels.begin();it!=sommets_potentiels.end();it++){
+
+        k=k+it->first;
+}
+
+if(m_vertices[sommet].m_value<k)
+    supprimer(sommet);
+}
+
+
+void Graph::calcul(bool clicked)
+{
+    int s;
+    int p;
+    int r;
+    int i=0;
+    int nb= m_vertices.size();
+    while(i<7){
+    for(auto it=m_vertices.begin();it!=m_vertices.end();it++)
+        {
+            r=valeur_r(it->first);
+            s=sucesseur(it->first);
+            p=predecesseurs(it->first);
+       m_vertices[it->first].m_value=m_vertices[it->first].m_value+r*(1 -(m_vertices[it->first].m_value/p))-s;
+       std::cout<<"it->first"<<it->first<<"valeur arc"<< m_vertices[it->first].m_value<<std::endl;
+      grman::mettre_a_jour();
+      rest(1000);
+       i++;
+        }
+    }
+}
+
+int Graph::valeur_r(int idx)
+{
+    std::stringstream path;
+    int nbsom;
+    int indice,r;
+path << "reprod" << m_id << ".txt";
+
+    std::ifstream fichier(path.str()); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier>>nbsom;
+
+        //on parcours toutes les sommets du fichier
+        for(int i=0; i<nbsom; i++)
+        {
+            fichier>>indice>>r;
+
+
+            if(indice==idx)
+            {
+                return r;
+            }
+
+        }
+    }
+
+}
+
+
+int Graph::predecesseurs(int idx)
+{
+    int nb_vertex;
+    int nb_edge;
+    int id;
+    int z;
+    double value;
+    int x,y;
+    int idVert1, idVert2;
+    double weight;
+    int emplacement;
+    std::string pic_name;
+    std::stringstream path;
+    int k=0;
+    int all_dead;
+
+std::map<int,int> poids_a_deplacer;
+    std::map<int,int> sommets_potentiels;
+
+    path << "graph" << m_id << ".txt";
+
+    std::ifstream fichier(path.str()); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+        fichier >> id;
+        fichier >> nb_vertex;
+
+
+        for(int i=0; i<nb_vertex; i++)
+        {
+            fichier >> z >> value >> x >> y >> emplacement;
+            std::getline(fichier,pic_name);
+        }
+
+        fichier >> nb_edge;
+
+        for(int i=0; i<nb_edge; i++)
+        {
+            fichier >> z >> idVert1 >> idVert2 >> weight;
+
+            if(idVert2==idx)
+            {
+                sommets_potentiels.insert(std::pair<int,int> (idVert1,weight));
+
+
+            }
+
+        }
+
+    }
+
+
+     /*   for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+            {
+                std::cout << it->first << std::endl;
+            }*/
+
+
+            std::cout << sommets_potentiels.size() << std::endl;
+        //Si on a pas de prédécesseurs
+        if(sommets_potentiels.size() == 0)
+        {
+            k=m_vertices[idx].m_value+0,001;
+            std::cout << " k pas de pred: " << k << std::endl;
+
+            return k;
+        }
+
+
+        //Si on a des predecesseurs
+        if(sommets_potentiels.size() != 0)
+        {
+
+
+       /*     //On verifie si les predecesseurs potentiels sont dans le graph
+            for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+            {
+                est_present=false;
+
+                for (auto itBis = m_cim.begin(); itBis!=m_cim.end(); ++itBis)
+                {
+
+                    if( it->first == itBis->first)
+                        est_present=true;
+
+                }
+
+                //Si oui, on le supprime
+                if(est_present)
+                    sommets_potentiels.erase(it->first);
+            }*/
+
+
+            //Variable pour verifier si tout les sommets sont morts
+            all_dead = sommets_potentiels.size();
+            std::cout << "alldead : " << all_dead << std::endl;
+
+            //On deplace les sommets qui sont morts par le predateur dans une nouvelle map
+            for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+            {
+                if(it->second >= m_vertices[it->first].m_value)
+                {
+                    poids_a_deplacer.insert(std::pair<int,int> (it->first,it->second));
+                    sommets_potentiels.erase(it->first);
+                }
+
+            }
+
+            std::cout << "poid a deplacer : " << poids_a_deplacer.size() << std::endl;
+
+
+            //Si tout les sommets sont morts, en renvoie la somme des population qu'il restait
+            if(all_dead==poids_a_deplacer.size())
+            {
+                for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
+                {
+                    k = k+ m_vertices[it->first].m_value;
+
+                    supprimer(it->first);
+                }
+
+                std::cout << " k all dead : " << k << std::endl;
+
+                return k;
+
+            }
+
+            //Si pas tous supprimés mais il y en a a deplacer
+            if(all_dead!=poids_a_deplacer.size() &&  poids_a_deplacer.size()>0)
+            {
+
+                for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
+                {
+                    k = k+ it->second;
+                    supprimer(it->first);
+                }
+
+               // m_vertices[sommets_potentiels.begin()->first].m_value =  m_vertices[sommets_potentiels.begin()->first].m_value + k;
+
+
+                for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+                {
+                    k = k + it->second;
+
+                }
+
+                std::cout << " k : " << k << std::endl;
+                return k;
+
+            }
+
+            if(poids_a_deplacer.empty())
+            {
+
+                for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+                {
+                    k = k + it->second;
+                                    std::cout << " k : " << k << std::endl;
+
+                    std::cout << " it second : " << it->second<< std::endl;
+
+                }
+
+                std::cout << " k : " << k << std::endl;
+                return k;
+            }
+
+            std::cout << " k fin: " << k << std::endl;
+
+
+        }
+
+
+        else
+        {
+            std::cout << "file " << path.str() << " could not be found";
+        }
+
+        fichier.close();
+
+
+
+    }

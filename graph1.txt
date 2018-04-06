@@ -2,7 +2,7 @@
 6
 0 100 54 452 1grass.bmp
 1 50 54 160 1sauterelle.bmp
-2 30 356 64 1mouse.bmp
+2 55.7143 356 64 1mouse.bmp
 3 10 666 140 1snake.bmp
 4 5 666 459 1hibou.bmp
 5 100 340 550 1mushrooms.bmp

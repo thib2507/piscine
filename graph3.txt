@@ -15,7 +15,7 @@
 12 100 758 581 1earthworm.bmp
 13 50 544 607 1croco.bmp
 14 30 198 144 1cougar.bmp
-15 20 359 388 1python.bmp
+15 20 384 472 1python.bmp
 25
 0 1 2 20
 1 8 0 20

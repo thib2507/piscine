@@ -147,6 +147,28 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_top_box.add_child(m_main_box);
     m_main_box.set_dim(908,720);
     m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
+
+    /*  if (id==1)
+    {
+        m_main_box.add_child(fond);
+        fond.set_pic_name("foret1.bmp");
+
+    }
+
+      if (id==2)
+    {
+        m_main_box.add_child(fond);
+        fond.set_pic_name("asie3.bmp");
+
+    }
+
+      if (id==3)
+    {
+        m_main_box.add_child(fond);
+        fond.set_pic_name("savane2.bmp");
+
+    }*/
+
     m_main_box.set_bg_color(BLANCJAUNE);
 
     m_top_box.add_child(m_retour);
@@ -174,27 +196,28 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_temps.set_bg_color(BLEU);
 
     m_ajout.add_child(ajout);
-    ajout.set_message("ajouter");
+    ajout.set_pic_name("add.bmp");
 
     m_sup.add_child(sup);
-    sup.set_message("supprimer");
+    sup.set_pic_name("supp.bmp");
 
     m_retour.add_child(retour);
-    retour.set_message("menu");
+    retour.set_pic_name("menu2.bmp");
 
     m_fcon.add_child(fcon);
-    fcon.set_message("forte connexite");
+    fcon.set_pic_name("hard.bmp");
 
     m_kcon.add_child(kcon);
-    kcon.set_message("k-connexite");
+    kcon.set_pic_name("k.bmp");
 
     m_temps.add_child(temps);
-    temps.set_message("analyse temps");
+    temps.set_pic_name("time.bmp");
 
 
 
 
 }
+
 
 
 /// Méthode spéciale qui construit un graphe arbitraire (démo)
@@ -400,7 +423,7 @@ int Graph::update()
         m_interface->m_supp_couleur.set_frame(10,630,75,75);
         m_interface->m_supp_couleur.set_bg_color(ROUGECLAIR);
         m_interface->m_supp_couleur.add_child(m_interface->sup_couleur);
-        m_interface->sup_couleur.set_message("supprimer couleur");
+        m_interface->sup_couleur.set_pic_name("back.bmp");
     }
 
     if(m_interface->m_supp_couleur.clicked())
@@ -428,7 +451,7 @@ int Graph::update()
         m_interface->m_revenir.set_frame(10,630,75,75);
         m_interface->m_revenir.set_bg_color(ROUGECLAIR);
         m_interface->m_revenir.add_child(m_interface->revenir);
-        m_interface->revenir.set_message("revenir");
+        m_interface->revenir.set_pic_name("back.bmp");
 
     }
 

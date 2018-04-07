@@ -280,16 +280,18 @@ class GraphInterface
         grman::WidgetButton m_fcon;//fortement connexe
         grman::WidgetButton m_kcon;
         grman::WidgetButton m_supp_couleur;
-        grman::WidgetText retour;
-        grman::WidgetText ajout;
-        grman::WidgetText sup;
-        grman::WidgetText fcon;
-        grman::WidgetText kcon;
-        grman::WidgetText sup_couleur;
+        grman::WidgetImage retour;
+        grman::WidgetImage ajout;
+        grman::WidgetImage sup;
+        grman::WidgetImage fcon;
+        grman::WidgetImage kcon;
+        grman::WidgetImage sup_couleur;
         grman::WidgetButton m_temps;
-        grman::WidgetText temps;
+        grman::WidgetImage temps;
         grman::WidgetButton m_revenir;
-        grman::WidgetText revenir;
+        grman::WidgetImage revenir;
+
+        ///grman::WidgetImage fond;
 
 
 

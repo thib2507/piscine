@@ -141,3 +141,74 @@
 	"grman/grman.h"
 	"graph.h"
 
+1523132869 source:c:\users\mario\desktop\new3\piscine\graph.cpp
+	"graph.h"
+
+1523132848 c:\users\mario\desktop\new3\piscine\graph.h
+	<vector>
+	<map>
+	<queue>
+	<stack>
+	<string>
+	<memory>
+	<fstream>
+	<sstream>
+	"grman/grman.h"
+
+1523131097 c:\users\mario\desktop\new3\piscine\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1523131097 c:\users\mario\desktop\new3\piscine\grman\grman_couleurs.h
+
+1523131097 c:\users\mario\desktop\new3\piscine\grman\coords.h
+	<cmath>
+
+1523131097 c:\users\mario\desktop\new3\piscine\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523131097 source:c:\users\mario\desktop\new3\piscine\grman\coords.cpp
+	"coords.h"
+
+1523131097 source:c:\users\mario\desktop\new3\piscine\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523131097 source:c:\users\mario\desktop\new3\piscine\grman\widget.cpp
+	"widget.h"
+
+1523131097 source:c:\users\mario\desktop\new3\piscine\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+	"menu.h"
+
+1523131097 c:\users\mario\desktop\new3\piscine\menu.h
+	"grman/grman.h"
+	"grman/widget.h"
+	"graph.h"
+
+1523131097 source:c:\users\mario\desktop\new3\piscine\menu.cpp
+	"menu.h"
+	"grman/widget.h"
+	"grman/grman.h"
+	"graph.h"
+

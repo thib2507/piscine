@@ -288,6 +288,9 @@ class GraphInterface
         grman::WidgetText sup_couleur;
         grman::WidgetButton m_temps;
         grman::WidgetText temps;
+        grman::WidgetButton m_revenir;
+        grman::WidgetText revenir;
+
 
 
 
@@ -365,6 +368,7 @@ class Graph
         void calcul();
         int valeur_r(int idx);
         int predecesseurs(int idx);
+        void m_new();
 
 
 };

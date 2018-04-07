@@ -14,7 +14,7 @@ VertexInterface::VertexInterface(int idx, int x, int y, std::string pic_name, in
 
     // Le slider de réglage de valeur
     m_top_box.add_child( m_slider_value );
-    m_slider_value.set_range(0.0, 100.0);  // Valeurs arbitraires, à adapter...
+    m_slider_value.set_range(0.0, 100000);  // Valeurs arbitraires, à adapter...
     m_slider_value.set_dim(20,80);
     m_slider_value.set_gravity_xy(grman::GravityX::Left, grman::GravityY::Up);
 
@@ -169,7 +169,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_kcon.set_frame(10,350,75,75);
     m_kcon.set_bg_color(BLEU);
 
-     m_top_box.add_child(m_temps);
+    m_top_box.add_child(m_temps);
     m_temps.set_frame(10,435,75,75);
     m_temps.set_bg_color(BLEU);
 
@@ -188,7 +188,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_kcon.add_child(kcon);
     kcon.set_message("k-connexite");
 
-m_temps.add_child(temps);
+    m_temps.add_child(temps);
     temps.set_message("analyse temps");
 
 
@@ -347,7 +347,7 @@ int Graph::update()
         elt.second.post_update();
 
 
-   if(m_interface->m_ajout.clicked())
+    if(m_interface->m_ajout.clicked())
     {
         bool bon;
         int idx;
@@ -420,10 +420,24 @@ int Graph::update()
 
     }
 
-    if(m_interface->m_temps.clicked()){
+    if(m_interface->m_temps.clicked())
+    {
 
         calcul();
-       }
+        m_interface->m_top_box.add_child(m_interface->m_revenir);
+        m_interface->m_revenir.set_frame(10,630,75,75);
+        m_interface->m_revenir.set_bg_color(ROUGECLAIR);
+        m_interface->m_revenir.add_child(m_interface->revenir);
+        m_interface->revenir.set_message("revenir");
+
+    }
+
+    if(m_interface->m_revenir.clicked())
+        {
+        m_new();
+    m_interface->m_top_box.remove_child(m_interface->m_revenir);
+    save_graph();
+        }
 
     if(m_interface->m_retour.clicked())
     {
@@ -434,6 +448,7 @@ int Graph::update()
     {
         return 1;
     }
+
 
 
 
@@ -610,17 +625,20 @@ void Graph::supprimer(int idx)
 
 void Graph::empty_edges()
 {
+    if(!m_edges.empty())
     m_edges.clear();
 }
 
 void Graph::empty_vertice()
 {
+    if(!m_vertices.empty())
     m_vertices.clear();
 }
 
 void Graph::empty_cim()
 {
-    m_cim.clear();
+        if(!m_cim.empty())
+            m_cim.clear();
 }
 
 void Graph::clear_interface()
@@ -1296,6 +1314,7 @@ int Graph::sucesseur(int sommet)
 {
     std::map<int,int> sommets_potentiels;
     std::stringstream path;
+    std::vector<int> a_supprimer;
     bool estpresent;
     int nbarete;
     int S1, S2,indice,poids;
@@ -1313,7 +1332,6 @@ int Graph::sucesseur(int sommet)
         for(int i=0; i<nbarete; i++)
         {
             fichier>>S1>>S2>>indice>>poids;
-            std::cout<<"s1:"<<S1<<"S2:"<<S2<<std::endl;
 
             if(S1==sommet)
             {
@@ -1322,6 +1340,8 @@ int Graph::sucesseur(int sommet)
 
         }
     }
+
+
     if(sommets_potentiels.size()!=0)
     {
 
@@ -1338,9 +1358,13 @@ int Graph::sucesseur(int sommet)
             }
             if(estpresent==true)
             {
-                sommets_potentiels.erase(it->first);
+                a_supprimer.push_back(it->first);
             }
         }
+
+        for(int i=0; i<a_supprimer.size();i++)
+                            sommets_potentiels.erase(a_supprimer[i]);
+
 
     }
 
@@ -1349,10 +1373,8 @@ int Graph::sucesseur(int sommet)
 
         k=k+it->first;
     }
-
     if(m_vertices[sommet].m_value<k)
-        supprimer(sommet);
-
+            m_vertices[sommet].m_value=0;
 
     return k;
 }
@@ -1365,60 +1387,83 @@ void Graph::calcul()
     int r;
     int i=0;
     int nt1;
-    int nb= m_vertices.size();
+    bool il_faut_supp=false;
+
     while(i<7)
     {
         for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
         {
-            rest(1000);
+           rest(1000);
             r=valeur_r(it->first);
-            s=sucesseur(it->first);
             p=predecesseurs(it->first);
+            s=sucesseur(it->first);
+            colorer(it->first,i);
             nt1=0;
-            nt1=int(m_vertices[it->first].m_value+r*(1 -((m_vertices[it->first].m_value)/p))-s);
-if (nt1>0 && nt1<100){
-            while(int(m_vertices[it->first].m_value)!=nt1)
-            {
-                if(int(m_vertices[it->first].m_value)<nt1)
-                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)+1;
-                if(int(m_vertices[it->first].m_value)>nt1)
-                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)-1;
+            nt1=int(m_vertices[it->first].m_value+(r*m_vertices[it->first].m_value*(1 -((m_vertices[it->first].m_value)/p)))-s);
+            if(p==1 && r==-42){
+                nt1=100000;
+            }
+            if(p==1 && r!=-42){
+                nt1=0;
+            }
 
-                    std::cout<<"m_value vaut: "<<int(m_vertices[it->first].m_value)<<std::endl;
-                    std::cout<<"m_value nt+1 vaut: "<<nt1;
-                grman::mettre_a_jour();
-            update();
-            }}
-            if(nt1>100){
-                    nt1=100;
-              while(int(m_vertices[it->first].m_value)!=nt1)
+            if (nt1>0 && nt1<100000)
             {
-                if(int(m_vertices[it->first].m_value)<nt1)
-                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)+1;
-                if(int(m_vertices[it->first].m_value)>nt1)
-                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)-1;
+               if(int(m_vertices[it->first].m_value)<nt1){
+                            for(int i=0;i<(nt1-m_vertices[it->first].m_value);i++)
+                        m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)+1;
+                    }
+                    if(int(m_vertices[it->first].m_value)>nt1){
+                              for(int i=0;i<(m_vertices[it->first].m_value-nt1);i++)
+                        m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)-1;
+                    }
 
-                    std::cout<<"m_value vaut: "<<int(m_vertices[it->first].m_value)<<std::endl;
-                    std::cout<<"m_value nt+1 vaut: "<<nt1;
+
                 grman::mettre_a_jour();
-            update();
-            }}
-            if(nt1<=0){
-                supprimer(it->first);
-                //save_graph();
-                 grman::mettre_a_jour();
-            update();
+                    update();
+
 
             }
-            ///tant que m_value different de nvx if < i-- if>i++ avec rest entre chaque
-            //m_vertices[it->first].m_value!=m_vertices[it->first].m_value+r*(1 -(m_vertices[it->first].m_value/p))-s;
-            std::cout<<"it->first"<<it->first<<"valeur arc"<< m_vertices[it->first].m_value<<std::endl;
+
+             if(nt1>100000)
+            {
+                nt1=100;
+
+                    if(int(m_vertices[it->first].m_value)<nt1){
+                            for(int i=0;i<(nt1-m_vertices[it->first].m_value);i++)
+                        m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)+1;
+                    }
+                    if(int(m_vertices[it->first].m_value)>nt1){
+                              for(int i=0;i<(m_vertices[it->first].m_value-nt1);i++)
+                        m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)-1;
+                    }
+                    std::cout<<"m_value vaut: "<<int(m_vertices[it->first].m_value)<<std::endl;
+                    std::cout<<"m_value nt+1 vaut: "<<nt1;
+                    grman::mettre_a_jour();
+                    update();
+
+                m_vertices[it->first].m_value=nt1;
+                grman::mettre_a_jour();
+                    update();
+            }
+
+            if(nt1<=0)
+            {
+                m_vertices[it->first].m_value=0;
+               // supprimer(it->first);
+                //save_graph();
+               grman::mettre_a_jour();
+               update();
+
+            }
 
 
 
         }
+
         i++;
     }
+     save_graph();
 }
 
 int Graph::valeur_r(int idx)
@@ -1458,6 +1503,7 @@ int Graph::predecesseurs(int idx)
     int z;
     double value;
     int x,y;
+    int stock=0;
     int idVert1, idVert2;
     double weight;
     int emplacement;
@@ -1469,6 +1515,7 @@ int Graph::predecesseurs(int idx)
     std::map<int,int> poids_a_deplacer;
     std::map<int,int> sommets_potentiels;
     std::map <int,int> indice_aretes;
+    std::vector<int> a_suprimer;
 
     path << "graph" << m_id << ".txt";
 
@@ -1512,7 +1559,8 @@ int Graph::predecesseurs(int idx)
     //Si on a pas de prédécesseurs
     if(sommets_potentiels.size() == 0)
     {
-        k=m_vertices[idx].m_value/m_vertices[idx].m_value;
+
+        k=1;
         std::cout << " k pas de pred: " << k << std::endl;
 
         return k;
@@ -1554,10 +1602,14 @@ int Graph::predecesseurs(int idx)
             {
                 poids_a_deplacer.insert(std::pair<int,int> (it->first,it->second));
                 indice_aretes.erase(it->first);
-                sommets_potentiels.erase(it->first);
+                a_suprimer.push_back(it->first);
             }
 
         }
+
+        for(int i=0; i<a_suprimer.size();i++)
+                sommets_potentiels.erase(a_suprimer[i]);
+
 
         std::cout << "poid a deplacer : " << poids_a_deplacer.size() << std::endl;
 
@@ -1568,7 +1620,7 @@ int Graph::predecesseurs(int idx)
             for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
             {
                 k = k+ m_vertices[it->first].m_value;
-
+                if(valeur_r(it->first)!=-42)
                 supprimer(it->first);
                 save_graph();
             }
@@ -1585,21 +1637,25 @@ int Graph::predecesseurs(int idx)
 
             for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
             {
-                k = k+ it->second;
+                k = k+m_vertices[it->first].m_value;
+                stock= stock+ it->second;
                 supprimer(it->first);
+                m_vertices[idx].m_value=m_vertices[idx].m_value*1,20;
                 save_graph();
             }
 
-            m_edges[indice_aretes.begin()->second].m_weight = m_edges[indice_aretes.begin()->second].m_weight + k;
-            grman::mettre_a_jour();
-            update();
+            //m_edges[indice_aretes.begin()->second].m_weight = m_edges[indice_aretes.begin()->second].m_weight + stock;
+            //grman::mettre_a_jour();
+            //update();
             // m_vertices[sommets_potentiels.begin()->first].m_value =  m_vertices[sommets_potentiels.begin()->first].m_value + k;
-
+                stock=0;
 
             for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
             {
-                k = k + it->second;
 
+                stock = (stock + it->second)*m_vertices[it->first].m_value;
+                k=k+stock;
+                stock=0;
             }
 
             std::cout << " k : " << k << std::endl;
@@ -1612,7 +1668,9 @@ int Graph::predecesseurs(int idx)
 
             for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
             {
-                k = k + it->second;
+               stock = (stock + it->second)*m_vertices[it->first].m_value;
+                k=k+stock;
+                stock=0;
                 std::cout << " k : " << k << std::endl;
 
                 std::cout << " it second : " << it->second<< std::endl;
@@ -1638,4 +1696,25 @@ int Graph::predecesseurs(int idx)
 
 
 
+}
+
+void Graph::m_new(){
+
+std::vector<int> ajouter;
+for(auto it=m_cim.begin();it!=m_cim.end();it++)
+    {
+    ajouter.push_back(it->first);
+
+    }
+
+for(int i=0;i<ajouter.size();i++){
+
+    std::cout << " cim index : " << ajouter[i] << std::endl;
+}
+for(int i=0;i<ajouter.size();i++){
+
+    ajout(ajouter[i]);
+}
+grman::mettre_a_jour();
+    update();
 }

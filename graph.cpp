@@ -347,21 +347,37 @@ int Graph::update()
         elt.second.post_update();
 
 
-    if(m_interface->m_ajout.clicked())
+   if(m_interface->m_ajout.clicked())
     {
+        bool bon;
         int idx;
         if(m_cim.empty()==false)
         {
-            std::cout << "Sommets pouvant etre ajoutes :" << std::endl;
-            //on affiche tout les sommets présent dans le cim
-            for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+            while (bon == false)
             {
-                std::cout<<"- " <<it->first<<std::endl;
-            }
+                std::cout <<std::endl << "Sommets pouvant etre ajoutes :" << std::endl;
+                //on affiche tout les sommets présent dans le cim
 
-            std::cout << "--> ";
-            std::cin >> idx;
+                for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                {
+                    std::cout<<"- " <<it->first<<std::endl;
+                }
+
+                std::cout << "--> ";
+                std::cin >> idx;
+
+                bon=false;
+                for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                {
+                    if (it->first == idx)
+                    {
+                        bon=true;
+                    }
+
+                }
+            }
         }
+
         ajout(idx);
 
     }

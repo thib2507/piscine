@@ -290,6 +290,7 @@ class GraphInterface
         grman::WidgetImage temps;
         grman::WidgetButton m_revenir;
         grman::WidgetImage revenir;
+        grman::WidgetImage fond;
 
         ///grman::WidgetImage fond;
 

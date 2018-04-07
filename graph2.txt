@@ -1,11 +1,11 @@
 2
 10
 0 0 347 3 1bengal_tiger.bmp
-1 621 21 174 1leopard.bmp
-2 886 706 177 1chacal.bmp
-3 896 16 367 1panda.bmp
-4 25318 447 328 1elephant.bmp
-5 1220 721 390 1antelope.bmp
+1 249 47 131 1leopard.bmp
+2 2500 706 177 1chacal.bmp
+3 2687 16 367 1panda.bmp
+4 3169 388 316 1elephant.bmp
+5 4267 721 390 1antelope.bmp
 6 75714.3 67 589 1bamboo.bmp
 7 72857.1 343 583 1fruits.bmp
 8 100000 707 580 1leaves.bmp

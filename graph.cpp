@@ -148,7 +148,7 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_main_box.set_dim(908,720);
     m_main_box.set_gravity_xy(grman::GravityX::Right, grman::GravityY::Up);
 
-    /*  if (id==1)
+   /*  if (id==1)
     {
         m_main_box.add_child(fond);
         fond.set_pic_name("foret1.bmp");
@@ -246,6 +246,26 @@ void Graph::make_example(const std::string& nom_fichier)
     if(fichier) //si le fichier à bien été ouvert
     {
         fichier >> id;
+        if (id==1)
+    {
+        m_interface->m_main_box.add_child(m_interface->fond);
+        m_interface->fond.set_pic_name("foret1.bmp");
+
+    }
+
+      if (id==2)
+    {
+        m_interface->m_main_box.add_child(m_interface->fond);
+        m_interface->fond.set_pic_name("asie3.bmp");
+
+    }
+
+      if (id==3)
+    {
+        m_interface->m_main_box.add_child(m_interface->fond);
+        m_interface->fond.set_pic_name("savane2.bmp");
+
+    }
         m_id = id;
 
         fichier >> nb_vertex;

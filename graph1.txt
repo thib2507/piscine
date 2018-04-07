@@ -1,11 +1,11 @@
 1
 6
-0 100 54 452 1grass.bmp
-1 50 54 160 1sauterelle.bmp
-2 55.7143 356 64 1mouse.bmp
-3 10 666 140 1snake.bmp
-4 5 666 459 1hibou.bmp
-5 100 340 550 1mushrooms.bmp
+0 100 235 617 1grass.bmp
+1 50 436 615 1sauterelle.bmp
+2 55.7143 771 498 1mouse.bmp
+3 10 378 444 1snake.bmp
+4 5 151 83 1hibou.bmp
+5 100 34 574 1mushrooms.bmp
 6
 0 0 1 50
 1 1 2 20

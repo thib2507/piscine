@@ -286,6 +286,9 @@ class GraphInterface
         grman::WidgetText fcon;
         grman::WidgetText kcon;
         grman::WidgetText sup_couleur;
+        grman::WidgetButton m_temps;
+        grman::WidgetText temps;
+
 
 
 
@@ -359,7 +362,7 @@ class Graph
         int verif_connexite(int actuel);
         void vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& indice_connexite, std::vector<int>& marque);
         int sucesseur(int sommet);
-        void calcul(bool clicked);
+        void calcul();
         int valeur_r(int idx);
         int predecesseurs(int idx);
 

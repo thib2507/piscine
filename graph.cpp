@@ -169,6 +169,10 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
     m_kcon.set_frame(10,350,75,75);
     m_kcon.set_bg_color(BLEU);
 
+     m_top_box.add_child(m_temps);
+    m_temps.set_frame(10,435,75,75);
+    m_temps.set_bg_color(BLEU);
+
     m_ajout.add_child(ajout);
     ajout.set_message("ajouter");
 
@@ -183,6 +187,9 @@ GraphInterface::GraphInterface(int x, int y, int w, int h)
 
     m_kcon.add_child(kcon);
     kcon.set_message("k-connexite");
+
+m_temps.add_child(temps);
+    temps.set_message("analyse temps");
 
 
 
@@ -344,16 +351,17 @@ int Graph::update()
     {
         int idx;
         if(m_cim.empty()==false)
-    {
-        std::cout << "Sommets pouvant etre ajoutes :" << std::endl;
-        //on affiche tout les sommets présent dans le cim
-        for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
         {
-            std::cout<<"- " <<it->first<<std::endl;
-        }
+            std::cout << "Sommets pouvant etre ajoutes :" << std::endl;
+            //on affiche tout les sommets présent dans le cim
+            for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+            {
+                std::cout<<"- " <<it->first<<std::endl;
+            }
 
-        std::cout << "--> ";
-        std::cin >> idx;}
+            std::cout << "--> ";
+            std::cin >> idx;
+        }
         ajout(idx);
 
     }
@@ -386,16 +394,20 @@ int Graph::update()
             it->second.m_interface->m_top_box.set_bg_color(-1);
 
         }
-        calcul(true);
 
         m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
     }
     if(m_interface->m_kcon.clicked())
-        {
-m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
+    {
+        m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
         k_connexite();
 
     }
+
+    if(m_interface->m_temps.clicked()){
+
+        calcul();
+       }
 
     if(m_interface->m_retour.clicked())
     {
@@ -650,7 +662,7 @@ int Graph::check_voisins(int idx, std::vector<int> marque)
                 }
 
 
-                 for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
                 {
                     if(sommets_potentiels[i] == it-> first)
                         est_present=true;
@@ -771,11 +783,11 @@ void Graph::fortement_connexe()
     std::vector<int> marque_e2;
 
     //initialisation de la map numérateur
- for(auto it=m_vertices.begin();it!=m_vertices.end();it++)
-        {
-            numerateur.insert(std::pair <int,int> (it->first,0));
+    for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
+    {
+        numerateur.insert(std::pair <int,int> (it->first,0));
 
-        }
+    }
 
 
     ///DEBUT ETAPE 1 ----------------------------------------------------------------------------///
@@ -1069,48 +1081,52 @@ void Graph::colorer(int idx, int tour)
 int Graph::k_connexite()
 {
 
-int k=0;
-for(int i=0;i<m_vertices.size();i++){
-
-    supprimer(i);
-    std::cout<<"verif connexite"<<verif_connexite(m_vertices.begin()->first)<<std::endl;
-    std::cout<<m_cim.size()<<"size cim apres supp"<<std::endl;
-    if(verif_connexite(m_vertices.begin()->first)==0){
-        std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
-        ajout(i);
-        return 0;
-    }
-    else
+    int k=0;
+    for(int i=0; i<m_vertices.size(); i++)
     {
 
-        ajout(i);
+        supprimer(i);
+        std::cout<<"verif connexite"<<verif_connexite(m_vertices.begin()->first)<<std::endl;
+        std::cout<<m_cim.size()<<"size cim apres supp"<<std::endl;
+        if(verif_connexite(m_vertices.begin()->first)==0)
+        {
+            std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
+            ajout(i);
+            return 0;
+        }
+        else
+        {
+
+            ajout(i);
+
+        }
 
     }
 
-}
+    k++;
 
-k++;
-
-for(int i=0;i<m_vertices.size();i++){
-        for(int j=0;j<m_vertices.size();j++)
+    for(int i=0; i<m_vertices.size(); i++)
+    {
+        for(int j=0; j<m_vertices.size(); j++)
+        {
+            supprimer(i);
+            supprimer(j);
+            if(verif_connexite(m_vertices.begin()->first)==0)
             {
-    supprimer(i);
-    supprimer(j);
-    if(verif_connexite(m_vertices.begin()->first)==0){
-        std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
-        ajout(i);
-        ajout(j);
-        return 0;
+                std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
+                ajout(i);
+                ajout(j);
+                return 0;
 
+            }
+            else
+            {
+                ajout(i);
+                ajout(j);
+            }
+        }
     }
-    else
-    {
-        ajout(i);
-        ajout(j);
-    }
-}
-}
- k++;
+    k++;
 
 
 
@@ -1159,8 +1175,8 @@ void Graph::vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& i
         /*for(int i=0; i<sommets_potentiels.size();i++)
             std::cout << sommets_potentiels[i] << std::endl;*/
 
-     /*   if(sommets_potentiels.size() == 0)
-            return -1;*/
+        /*   if(sommets_potentiels.size() == 0)
+               return -1;*/
 
         if(sommets_potentiels.size() != 0)
         {
@@ -1177,7 +1193,7 @@ void Graph::vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& i
                         est_present=true;
                 }
 
-                 for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
                 {
                     if(sommets_potentiels[i] == it->first)
                         est_present=true;
@@ -1187,12 +1203,12 @@ void Graph::vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& i
 
 
                 if(!est_present)
-                    {
-                        sommets_voisins.push_back(sommets_potentiels[i]);
-                    }
+                {
+                    sommets_voisins.push_back(sommets_potentiels[i]);
+                }
             }
 
-            for(int i=0;i<sommets_voisins.size();i++)
+            for(int i=0; i<sommets_voisins.size(); i++)
             {
                 marque.push_back(sommets_voisins[i]);
                 pile.push(sommets_voisins[i]);
@@ -1202,16 +1218,16 @@ void Graph::vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& i
         }
 
 
-    std::cout<<"MAP ------------------------------------- "  << std::endl<< std::endl<< std::endl;
+        std::cout<<"MAP ------------------------------------- "  << std::endl<< std::endl<< std::endl;
 
-    for (auto it = indice_connexite.begin(); it!=indice_connexite.end(); it++)
-    {
+        for (auto it = indice_connexite.begin(); it!=indice_connexite.end(); it++)
+        {
 
 
             std::cout<<"indice sommet : "<< it->first << "    indice connexite : " << it->second << std::endl;
 
 
-    }
+        }
 
 
 
@@ -1234,12 +1250,12 @@ int Graph::verif_connexite(int actuel)
     std::stack<int> pile;
     int indice;
     std::map<int, int> connexite;
-    for(auto it=m_vertices.begin();it!=m_vertices.end();it++)
-        {
+    for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
+    {
         connexite.insert(std::pair <int,int> (it->first,it->first));
 
-        }
-        marque.push_back(actuel);
+    }
+    marque.push_back(actuel);
     pile.push(actuel);
     while(!pile.empty())
     {
@@ -1254,7 +1270,7 @@ int Graph::verif_connexite(int actuel)
         {
             std::cout<<"pas connexe"<<std::endl;
             return 0;
-            }
+        }
     }
     std::cout<<"connexe"<<std::endl;
     return 1;
@@ -1262,7 +1278,7 @@ int Graph::verif_connexite(int actuel)
 
 int Graph::sucesseur(int sommet)
 {
-std::map<int,int> sommets_potentiels;
+    std::map<int,int> sommets_potentiels;
     std::stringstream path;
     bool estpresent;
     int nbarete;
@@ -1290,54 +1306,102 @@ std::map<int,int> sommets_potentiels;
 
         }
     }
-if(sommets_potentiels.size()!=0){
+    if(sommets_potentiels.size()!=0)
+    {
 
 
-for(auto it=sommets_potentiels.begin();it!=sommets_potentiels.end();it++){
-    estpresent=false;
-    for(auto it1=m_cim.begin();it1!=m_cim.end();it1++)
+        for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
         {
-        if(it->first==it1->first)
-            estpresent=true;
+            estpresent=false;
+            for(auto it1=m_cim.begin(); it1!=m_cim.end(); it1++)
+            {
+                if(it->first==it1->first)
+                    estpresent=true;
 
 
+            }
+            if(estpresent==true)
+            {
+                sommets_potentiels.erase(it->first);
+            }
         }
-        if(estpresent==true){
-            sommets_potentiels.erase(it->first);
-}
-}
 
-}
+    }
 
-for(auto it=sommets_potentiels.begin();it!=sommets_potentiels.end();it++){
+    for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+    {
 
         k=k+it->first;
+    }
+
+    if(m_vertices[sommet].m_value<k)
+        supprimer(sommet);
+
+
+    return k;
 }
 
-if(m_vertices[sommet].m_value<k)
-    supprimer(sommet);
-}
 
-
-void Graph::calcul(bool clicked)
+void Graph::calcul()
 {
     int s;
     int p;
     int r;
     int i=0;
+    int nt1;
     int nb= m_vertices.size();
-    while(i<7){
-    for(auto it=m_vertices.begin();it!=m_vertices.end();it++)
+    while(i<7)
+    {
+        for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
         {
+            rest(1000);
             r=valeur_r(it->first);
             s=sucesseur(it->first);
             p=predecesseurs(it->first);
-       m_vertices[it->first].m_value=m_vertices[it->first].m_value+r*(1 -(m_vertices[it->first].m_value/p))-s;
-       std::cout<<"it->first"<<it->first<<"valeur arc"<< m_vertices[it->first].m_value<<std::endl;
-      grman::mettre_a_jour();
-      rest(1000);
-       i++;
+            nt1=0;
+            nt1=int(m_vertices[it->first].m_value+r*(1 -((m_vertices[it->first].m_value)/p))-s);
+if (nt1>0 && nt1<100){
+            while(int(m_vertices[it->first].m_value)!=nt1)
+            {
+                if(int(m_vertices[it->first].m_value)<nt1)
+                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)+1;
+                if(int(m_vertices[it->first].m_value)>nt1)
+                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)-1;
+
+                    std::cout<<"m_value vaut: "<<int(m_vertices[it->first].m_value)<<std::endl;
+                    std::cout<<"m_value nt+1 vaut: "<<nt1;
+                grman::mettre_a_jour();
+            update();
+            }}
+            if(nt1>100){
+                    nt1=100;
+              while(int(m_vertices[it->first].m_value)!=nt1)
+            {
+                if(int(m_vertices[it->first].m_value)<nt1)
+                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)+1;
+                if(int(m_vertices[it->first].m_value)>nt1)
+                    m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)-1;
+
+                    std::cout<<"m_value vaut: "<<int(m_vertices[it->first].m_value)<<std::endl;
+                    std::cout<<"m_value nt+1 vaut: "<<nt1;
+                grman::mettre_a_jour();
+            update();
+            }}
+            if(nt1<=0){
+                supprimer(it->first);
+                //save_graph();
+                 grman::mettre_a_jour();
+            update();
+
+            }
+            ///tant que m_value different de nvx if < i-- if>i++ avec rest entre chaque
+            //m_vertices[it->first].m_value!=m_vertices[it->first].m_value+r*(1 -(m_vertices[it->first].m_value/p))-s;
+            std::cout<<"it->first"<<it->first<<"valeur arc"<< m_vertices[it->first].m_value<<std::endl;
+
+
+
         }
+        i++;
     }
 }
 
@@ -1346,7 +1410,7 @@ int Graph::valeur_r(int idx)
     std::stringstream path;
     int nbsom;
     int indice,r;
-path << "reprod" << m_id << ".txt";
+    path << "reprod" << m_id << ".txt";
 
     std::ifstream fichier(path.str()); //ouverture du fichier
     if(fichier) //si le fichier à bien été ouvert
@@ -1386,8 +1450,9 @@ int Graph::predecesseurs(int idx)
     int k=0;
     int all_dead;
 
-std::map<int,int> poids_a_deplacer;
+    std::map<int,int> poids_a_deplacer;
     std::map<int,int> sommets_potentiels;
+    std::map <int,int> indice_aretes;
 
     path << "graph" << m_id << ".txt";
 
@@ -1413,8 +1478,7 @@ std::map<int,int> poids_a_deplacer;
             if(idVert2==idx)
             {
                 sommets_potentiels.insert(std::pair<int,int> (idVert1,weight));
-
-
+                indice_aretes.insert(std::pair<int,int> (idVert1,z));
             }
 
         }
@@ -1422,134 +1486,140 @@ std::map<int,int> poids_a_deplacer;
     }
 
 
-     /*   for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
-            {
-                std::cout << it->first << std::endl;
-            }*/
+    /*   for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+           {
+               std::cout << it->first << std::endl;
+           }*/
 
 
-            std::cout << sommets_potentiels.size() << std::endl;
-        //Si on a pas de prédécesseurs
-        if(sommets_potentiels.size() == 0)
+    std::cout << sommets_potentiels.size() << std::endl;
+    //Si on a pas de prédécesseurs
+    if(sommets_potentiels.size() == 0)
+    {
+        k=m_vertices[idx].m_value/m_vertices[idx].m_value;
+        std::cout << " k pas de pred: " << k << std::endl;
+
+        return k;
+    }
+
+
+    //Si on a des predecesseurs
+    if(sommets_potentiels.size() != 0)
+    {
+
+
+        /*     //On verifie si les predecesseurs potentiels sont dans le graph
+             for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+             {
+                 est_present=false;
+
+                 for (auto itBis = m_cim.begin(); itBis!=m_cim.end(); ++itBis)
+                 {
+
+                     if( it->first == itBis->first)
+                         est_present=true;
+
+                 }
+
+                 //Si oui, on le supprime
+                 if(est_present)
+                     sommets_potentiels.erase(it->first);
+             }*/
+
+
+        //Variable pour verifier si tout les sommets sont morts
+        all_dead = sommets_potentiels.size();
+        std::cout << "alldead : " << all_dead << std::endl;
+
+        //On deplace les sommets qui sont morts par le predateur dans une nouvelle map
+        for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
         {
-            k=m_vertices[idx].m_value+0,001;
-            std::cout << " k pas de pred: " << k << std::endl;
+            if(it->second >= m_vertices[it->first].m_value)
+            {
+                poids_a_deplacer.insert(std::pair<int,int> (it->first,it->second));
+                indice_aretes.erase(it->first);
+                sommets_potentiels.erase(it->first);
+            }
 
+        }
+
+        std::cout << "poid a deplacer : " << poids_a_deplacer.size() << std::endl;
+
+
+        //Si tout les sommets sont morts, en renvoie la somme des population qu'il restait
+        if(all_dead==poids_a_deplacer.size())
+        {
+            for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
+            {
+                k = k+ m_vertices[it->first].m_value;
+
+                supprimer(it->first);
+                save_graph();
+            }
+
+            std::cout << " k all dead : " << k << std::endl;
+
+            return k;
+
+        }
+
+        //Si pas tous supprimés mais il y en a a deplacer
+        if(all_dead!=poids_a_deplacer.size() &&  poids_a_deplacer.size()>0)
+        {
+
+            for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
+            {
+                k = k+ it->second;
+                supprimer(it->first);
+                save_graph();
+            }
+
+            m_edges[indice_aretes.begin()->second].m_weight = m_edges[indice_aretes.begin()->second].m_weight + k;
+            grman::mettre_a_jour();
+            update();
+            // m_vertices[sommets_potentiels.begin()->first].m_value =  m_vertices[sommets_potentiels.begin()->first].m_value + k;
+
+
+            for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+            {
+                k = k + it->second;
+
+            }
+
+            std::cout << " k : " << k << std::endl;
+            return k;
+
+        }
+
+        if(poids_a_deplacer.empty())
+        {
+
+            for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
+            {
+                k = k + it->second;
+                std::cout << " k : " << k << std::endl;
+
+                std::cout << " it second : " << it->second<< std::endl;
+
+            }
+
+            std::cout << " k : " << k << std::endl;
             return k;
         }
 
-
-        //Si on a des predecesseurs
-        if(sommets_potentiels.size() != 0)
-        {
-
-
-       /*     //On verifie si les predecesseurs potentiels sont dans le graph
-            for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
-            {
-                est_present=false;
-
-                for (auto itBis = m_cim.begin(); itBis!=m_cim.end(); ++itBis)
-                {
-
-                    if( it->first == itBis->first)
-                        est_present=true;
-
-                }
-
-                //Si oui, on le supprime
-                if(est_present)
-                    sommets_potentiels.erase(it->first);
-            }*/
-
-
-            //Variable pour verifier si tout les sommets sont morts
-            all_dead = sommets_potentiels.size();
-            std::cout << "alldead : " << all_dead << std::endl;
-
-            //On deplace les sommets qui sont morts par le predateur dans une nouvelle map
-            for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
-            {
-                if(it->second >= m_vertices[it->first].m_value)
-                {
-                    poids_a_deplacer.insert(std::pair<int,int> (it->first,it->second));
-                    sommets_potentiels.erase(it->first);
-                }
-
-            }
-
-            std::cout << "poid a deplacer : " << poids_a_deplacer.size() << std::endl;
-
-
-            //Si tout les sommets sont morts, en renvoie la somme des population qu'il restait
-            if(all_dead==poids_a_deplacer.size())
-            {
-                for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
-                {
-                    k = k+ m_vertices[it->first].m_value;
-
-                    supprimer(it->first);
-                }
-
-                std::cout << " k all dead : " << k << std::endl;
-
-                return k;
-
-            }
-
-            //Si pas tous supprimés mais il y en a a deplacer
-            if(all_dead!=poids_a_deplacer.size() &&  poids_a_deplacer.size()>0)
-            {
-
-                for(auto it=poids_a_deplacer.begin(); it!=poids_a_deplacer.end(); it++)
-                {
-                    k = k+ it->second;
-                    supprimer(it->first);
-                }
-
-               // m_vertices[sommets_potentiels.begin()->first].m_value =  m_vertices[sommets_potentiels.begin()->first].m_value + k;
-
-
-                for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
-                {
-                    k = k + it->second;
-
-                }
-
-                std::cout << " k : " << k << std::endl;
-                return k;
-
-            }
-
-            if(poids_a_deplacer.empty())
-            {
-
-                for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
-                {
-                    k = k + it->second;
-                                    std::cout << " k : " << k << std::endl;
-
-                    std::cout << " it second : " << it->second<< std::endl;
-
-                }
-
-                std::cout << " k : " << k << std::endl;
-                return k;
-            }
-
-            std::cout << " k fin: " << k << std::endl;
-
-
-        }
-
-
-        else
-        {
-            std::cout << "file " << path.str() << " could not be found";
-        }
-
-        fichier.close();
-
+        std::cout << " k fin: " << k << std::endl;
 
 
     }
+
+
+    else
+    {
+        std::cout << "file " << path.str() << " could not be found";
+    }
+
+    fichier.close();
+
+
+
+}

@@ -1414,7 +1414,7 @@ int Graph::sucesseur(int sommet)
     for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
     {
 
-        k=k+it->first;
+        k=k+((m_vertices[it->first].m_value)/20);
     }
     if(m_vertices[sommet].m_value<k)
             m_vertices[sommet].m_value=0;
@@ -1427,7 +1427,7 @@ void Graph::calcul()
 {
     int s;
     int p;
-    int r;
+    float r;
     int i=0;
     int nt1;
     bool il_faut_supp=false;
@@ -1436,21 +1436,25 @@ void Graph::calcul()
     {
         for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
         {
-           rest(1000);
+           rest(2000);
             r=valeur_r(it->first);
             p=predecesseurs(it->first);
             s=sucesseur(it->first);
             colorer(it->first,i);
-            nt1=0;
             nt1=int(m_vertices[it->first].m_value+(r*m_vertices[it->first].m_value*(1 -((m_vertices[it->first].m_value)/p)))-s);
-            if(p==1 && r==-42){
-                nt1=100000;
+            if(r==-42){
+                nt1=m_vertices[it->first].m_value;
+                std::cout<<"r=-42 sa valeur nt1 est : "<<nt1<<std::endl;
             }
-            if(p==1 && r!=-42){
-                nt1=0;
+           /*if(p==m_vertices[it->first].m_value && r!=-42){
+                nt1=m_vertices[it->first].m_value*0,50;
             }
+                if(nt1<m_vertices[it->first].m_value*0,90)
+                        nt1=m_vertices[it->first].m_value*0,95;
+                if(nt1>m_vertices[it->first].m_value*1,10)
+                        nt1=m_vertices[it->first].m_value*1,05;*/
 
-            if (nt1>0 && nt1<100000)
+            if (nt1>0 && nt1<100000)///boucle de variation dans le temps de la population
             {
                if(int(m_vertices[it->first].m_value)<nt1){
                             for(int i=0;i<(nt1-m_vertices[it->first].m_value);i++)
@@ -1470,7 +1474,7 @@ void Graph::calcul()
 
              if(nt1>100000)
             {
-                nt1=100;
+                nt1=100000;
 
                     if(int(m_vertices[it->first].m_value)<nt1){
                             for(int i=0;i<(nt1-m_vertices[it->first].m_value);i++)
@@ -1480,26 +1484,22 @@ void Graph::calcul()
                               for(int i=0;i<(m_vertices[it->first].m_value-nt1);i++)
                         m_vertices[it->first].m_value=int(m_vertices[it->first].m_value)-1;
                     }
-                    std::cout<<"m_value vaut: "<<int(m_vertices[it->first].m_value)<<std::endl;
-                    std::cout<<"m_value nt+1 vaut: "<<nt1;
-                    grman::mettre_a_jour();
-                    update();
 
-                m_vertices[it->first].m_value=nt1;
-                grman::mettre_a_jour();
+                    grman::mettre_a_jour();
                     update();
             }
 
-            if(nt1<=0)
+           if(nt1<=0)
             {
                 m_vertices[it->first].m_value=0;
-               // supprimer(it->first);
+               //supprimer(it->first);
                 //save_graph();
                grman::mettre_a_jour();
                update();
 
             }
-
+ std::cout<<it->first<<"  : indice du sommet"<<std::endl;
+  std::cout<<nt1<<"  : nt1"<<std::endl;
 
 
         }
@@ -1509,11 +1509,12 @@ void Graph::calcul()
      save_graph();
 }
 
-int Graph::valeur_r(int idx)
+float Graph::valeur_r(int idx)
 {
     std::stringstream path;
     int nbsom;
-    int indice,r;
+    int indice;
+    float r;
     path << "reprod" << m_id << ".txt";
 
     std::ifstream fichier(path.str()); //ouverture du fichier
@@ -1603,8 +1604,8 @@ int Graph::predecesseurs(int idx)
     if(sommets_potentiels.size() == 0)
     {
 
-        k=1;
-        std::cout << " k pas de pred: " << k << std::endl;
+        k=m_vertices[idx].m_value;
+        //std::cout << " k pas de pred: " << k << std::endl;
 
         return k;
     }
@@ -1636,7 +1637,7 @@ int Graph::predecesseurs(int idx)
 
         //Variable pour verifier si tout les sommets sont morts
         all_dead = sommets_potentiels.size();
-        std::cout << "alldead : " << all_dead << std::endl;
+        //std::cout << "alldead : " << all_dead << std::endl;
 
         //On deplace les sommets qui sont morts par le predateur dans une nouvelle map
         for(auto it=sommets_potentiels.begin(); it!=sommets_potentiels.end(); it++)
@@ -1654,7 +1655,7 @@ int Graph::predecesseurs(int idx)
                 sommets_potentiels.erase(a_suprimer[i]);
 
 
-        std::cout << "poid a deplacer : " << poids_a_deplacer.size() << std::endl;
+        //std::cout << "poid a deplacer : " << poids_a_deplacer.size() << std::endl;
 
 
         //Si tout les sommets sont morts, en renvoie la somme des population qu'il restait
@@ -1668,7 +1669,7 @@ int Graph::predecesseurs(int idx)
                 save_graph();
             }
 
-            std::cout << " k all dead : " << k << std::endl;
+            //std::cout << " k all dead : " << k << std::endl;
 
             return k;
 
@@ -1701,7 +1702,7 @@ int Graph::predecesseurs(int idx)
                 stock=0;
             }
 
-            std::cout << " k : " << k << std::endl;
+            //std::cout << " k : " << k << std::endl;
             return k;
 
         }
@@ -1714,17 +1715,17 @@ int Graph::predecesseurs(int idx)
                stock = (stock + it->second)*m_vertices[it->first].m_value;
                 k=k+stock;
                 stock=0;
-                std::cout << " k : " << k << std::endl;
+                //std::cout << " k : " << k << std::endl;
 
-                std::cout << " it second : " << it->second<< std::endl;
+                //std::cout << " it second : " << it->second<< std::endl;
 
             }
 
-            std::cout << " k : " << k << std::endl;
+            //std::cout << " k : " << k << std::endl;
             return k;
         }
 
-        std::cout << " k fin: " << k << std::endl;
+        //std::cout << " k fin: " << k << std::endl;
 
 
     }

@@ -369,7 +369,7 @@ class Graph
         void vecteur_voisins(int idx, std::stack<int>& pile, std::map<int,int>& indice_connexite, std::vector<int>& marque);
         int sucesseur(int sommet);
         void calcul();
-        int valeur_r(int idx);
+        float valeur_r(int idx);
         int predecesseurs(int idx);
         void m_new();
 

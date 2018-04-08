@@ -354,3 +354,74 @@
 1523208847 source:c:\users\louis cauquelin\desktop\piscine - copie\graph.cpp
 	"graph.h"
 
+1523209880 source:c:\users\louis cauquelin\desktop\piscine\graph.cpp
+	"graph.h"
+
+1523209880 c:\users\louis cauquelin\desktop\piscine\graph.h
+	<vector>
+	<map>
+	<queue>
+	<stack>
+	<string>
+	<memory>
+	<fstream>
+	<sstream>
+	"grman/grman.h"
+
+1523209880 c:\users\louis cauquelin\desktop\piscine\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1523209880 c:\users\louis cauquelin\desktop\piscine\grman\grman_couleurs.h
+
+1523209880 c:\users\louis cauquelin\desktop\piscine\grman\coords.h
+	<cmath>
+
+1523209880 c:\users\louis cauquelin\desktop\piscine\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523209880 source:c:\users\louis cauquelin\desktop\piscine\grman\coords.cpp
+	"coords.h"
+
+1523209880 source:c:\users\louis cauquelin\desktop\piscine\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523209880 source:c:\users\louis cauquelin\desktop\piscine\grman\widget.cpp
+	"widget.h"
+
+1523209880 source:c:\users\louis cauquelin\desktop\piscine\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+	"menu.h"
+
+1523209880 c:\users\louis cauquelin\desktop\piscine\menu.h
+	"grman/grman.h"
+	"grman/widget.h"
+	"graph.h"
+
+1523209880 source:c:\users\louis cauquelin\desktop\piscine\menu.cpp
+	"menu.h"
+	"grman/widget.h"
+	"grman/grman.h"
+	"graph.h"
+

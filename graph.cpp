@@ -438,6 +438,7 @@ int Graph::update()
 
     if(m_interface->m_fcon.clicked())
     {
+        save_graph();
         fortement_connexe();
 
 

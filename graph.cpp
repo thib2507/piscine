@@ -1161,20 +1161,28 @@ int Graph::k_connexite()
     int k=0;
     for(int i=0; i<m_vertices.size(); i++)
     {
-
+        rest(300);
         supprimer(i);
+        grman::mettre_a_jour();
+        update();
         std::cout<<"verif connexite"<<verif_connexite(m_vertices.begin()->first)<<std::endl;
         std::cout<<m_cim.size()<<"size cim apres supp"<<std::endl;
         if(verif_connexite(m_vertices.begin()->first)==0)
         {
+            rest(300);
             std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
             ajout(i);
+            grman::mettre_a_jour();
+             update();
             return 0;
+
         }
         else
         {
-
+            rest(300);
             ajout(i);
+            grman::mettre_a_jour();
+             update();
 
         }
 
@@ -1186,20 +1194,29 @@ int Graph::k_connexite()
     {
         for(int j=0; j<m_vertices.size(); j++)
         {
+            rest(300);
             supprimer(i);
             supprimer(j);
+            grman::mettre_a_jour();
+             update();
             if(verif_connexite(m_vertices.begin()->first)==0)
             {
+                rest(300);
                 std::cout<<"le graphe est : "<<k<<"-connexe"<<std::endl;
                 ajout(i);
                 ajout(j);
+                grman::mettre_a_jour();
+                 update();
                 return 0;
 
             }
             else
             {
+                rest(300);
                 ajout(i);
                 ajout(j);
+                grman::mettre_a_jour();
+                 update();
             }
         }
     }
@@ -1430,20 +1447,21 @@ void Graph::calcul()
     float r;
     int i=0;
     int nt1;
+    int temps=2000;
     bool il_faut_supp=false;
 
     while(i<7)
     {
         for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
         {
-           rest(2000);
+            m_vertices[it->first].m_interface->m_top_box.set_bg_color(BLEU);
+           rest(temps);
             r=valeur_r(it->first);
             p=predecesseurs(it->first);
             s=sucesseur(it->first);
-            colorer(it->first,i);
             nt1=int(m_vertices[it->first].m_value+(r*m_vertices[it->first].m_value*(1 -((m_vertices[it->first].m_value)/p)))-s);
             if(r==-42){
-                nt1=m_vertices[it->first].m_value;
+                nt1=m_vertices[it->first].m_value+10000;
                 std::cout<<"r=-42 sa valeur nt1 est : "<<nt1<<std::endl;
             }
            /*if(p==m_vertices[it->first].m_value && r!=-42){
@@ -1501,10 +1519,11 @@ void Graph::calcul()
  std::cout<<it->first<<"  : indice du sommet"<<std::endl;
   std::cout<<nt1<<"  : nt1"<<std::endl;
 
-
+m_vertices[it->first].m_interface->m_top_box.set_bg_color(BLANC);
         }
 
         i++;
+        temps=temps-200;
     }
      save_graph();
 }

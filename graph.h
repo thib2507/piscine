@@ -280,6 +280,7 @@ class GraphInterface
         grman::WidgetButton m_fcon;//fortement connexe
         grman::WidgetButton m_kcon;
         grman::WidgetButton m_supp_couleur;
+        grman::WidgetButton m_back_to_graph;
         grman::WidgetImage retour;
         grman::WidgetImage ajout;
         grman::WidgetImage sup;
@@ -372,6 +373,9 @@ class Graph
         float valeur_r(int idx);
         int predecesseurs(int idx);
         void m_new();
+        void graph_red_egde(int actuel, int indice, std::vector<int>& marque);
+        void back_to_colored_graph();
+
 
 
 };

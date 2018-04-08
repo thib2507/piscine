@@ -283,3 +283,74 @@
 	"grman/grman.h"
 	"graph.h"
 
+1523206302 source:c:\users\louis cauquelin\desktop\piscine - copie\grman\coords.cpp
+	"coords.h"
+
+1523206302 c:\users\louis cauquelin\desktop\piscine - copie\grman\coords.h
+	<cmath>
+
+1523206302 source:c:\users\louis cauquelin\desktop\piscine - copie\grman\grman.cpp
+	<cmath>
+	<unordered_map>
+	<unordered_set>
+	<utility>
+	<string>
+	<iostream>
+	<regex>
+	"grman.h"
+	<allegro.h>
+	<png.h>
+	<loadpng.h>
+	<jpgalleg.h>
+
+1523206302 c:\users\louis cauquelin\desktop\piscine - copie\grman\grman.h
+	<allegro.h>
+	<string>
+	"grman_couleurs.h"
+	"coords.h"
+	"widget.h"
+
+1523206302 c:\users\louis cauquelin\desktop\piscine - copie\grman\grman_couleurs.h
+
+1523206302 c:\users\louis cauquelin\desktop\piscine - copie\grman\widget.h
+	"grman.h"
+	<iostream>
+	<string>
+	<vector>
+	<algorithm>
+	<allegro.h>
+
+1523206302 source:c:\users\louis cauquelin\desktop\piscine - copie\grman\widget.cpp
+	"widget.h"
+
+1523206302 source:c:\users\louis cauquelin\desktop\piscine - copie\main.cpp
+	"grman/grman.h"
+	<iostream>
+	"graph.h"
+	"menu.h"
+
+1523208847 c:\users\louis cauquelin\desktop\piscine - copie\graph.h
+	<vector>
+	<map>
+	<queue>
+	<stack>
+	<string>
+	<memory>
+	<fstream>
+	<sstream>
+	"grman/grman.h"
+
+1523206302 c:\users\louis cauquelin\desktop\piscine - copie\menu.h
+	"grman/grman.h"
+	"grman/widget.h"
+	"graph.h"
+
+1523206302 source:c:\users\louis cauquelin\desktop\piscine - copie\menu.cpp
+	"menu.h"
+	"grman/widget.h"
+	"grman/grman.h"
+	"graph.h"
+
+1523208847 source:c:\users\louis cauquelin\desktop\piscine - copie\graph.cpp
+	"graph.h"
+

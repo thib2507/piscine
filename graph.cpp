@@ -439,11 +439,29 @@ int Graph::update()
     if(m_interface->m_fcon.clicked())
     {
         fortement_connexe();
+
+
+         m_interface->m_top_box.add_child(m_interface->m_back_to_graph);
+        m_interface->m_back_to_graph.set_frame(10,630,75,75);
+        m_interface->m_back_to_graph.set_bg_color(ROUGECLAIR);
+        m_interface->m_back_to_graph.add_child(m_interface->sup_couleur);
+        m_interface->sup_couleur.set_pic_name("back.bmp");
+
+    }
+
+
+          if(m_interface->m_back_to_graph.clicked())
+    {
+
+        back_to_colored_graph();
+        m_interface->m_top_box.remove_child(m_interface->m_back_to_graph);
+
         m_interface->m_top_box.add_child(m_interface->m_supp_couleur);
         m_interface->m_supp_couleur.set_frame(10,630,75,75);
         m_interface->m_supp_couleur.set_bg_color(ROUGECLAIR);
         m_interface->m_supp_couleur.add_child(m_interface->sup_couleur);
         m_interface->sup_couleur.set_pic_name("back.bmp");
+
     }
 
     if(m_interface->m_supp_couleur.clicked())
@@ -456,6 +474,7 @@ int Graph::update()
 
         m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
     }
+
     if(m_interface->m_kcon.clicked())
     {
         m_interface->m_top_box.remove_child(m_interface->m_supp_couleur);
@@ -844,11 +863,14 @@ int Graph::check_voisin_inverse(int idx, std::vector<int> marque)
 
 }
 
+
 void Graph::fortement_connexe()
 {
     int nb_etapes=1;
     int actuel;
     int next, stock;
+    int x,y;
+    int indice;
     int tour=0;
     bool ok;
     std::map<int,int> denominateur;
@@ -858,6 +880,14 @@ void Graph::fortement_connexe()
     std::queue<int> file_priorite;
     std::vector<int> marque_e1;
     std::vector<int> marque_e2;
+    std::vector<int> marque_edge;
+    std::vector<int> composante_graphe_reduit;
+
+    std::ofstream fichier("graphredcouleur.txt", std::ios::out | std::ios::trunc);
+
+    if(fichier)
+    {
+
 
     //initialisation de la map numérateur
     for(auto it=m_vertices.begin(); it!=m_vertices.end(); it++)
@@ -965,9 +995,11 @@ void Graph::fortement_connexe()
             if(it->second == stock)
             {
                 file_priorite.push(it->first);
-                denominateur.erase(it);
+                indice = it->first;
             }
         }
+
+        denominateur.erase(indice);
     }
 
     /*   std::cout << std::endl<< std::endl << "----------------FILE PRIORITE :" << std::endl;
@@ -980,8 +1012,9 @@ void Graph::fortement_connexe()
 
     ///FIN TRI PAR ORDRE DECROISSANT DES DENOMINATEURS---------------------------------
 
+    stock = m_vertices.size();
 
-    while(marque_e2.size() != m_vertices.size())
+    while(marque_e2.size() != stock)
     {
         // std::cout << "check voisin : " << check_voisin_inverse(3,marque_e2) <<std::endl <<std::endl<<std::endl<<std::endl;
 
@@ -1005,7 +1038,12 @@ void Graph::fortement_connexe()
 
             while(!stack_dfs.empty())
             {
+
                 actuel = stack_dfs.top();
+                composante_graphe_reduit.push_back(actuel);
+                x= m_vertices[actuel].m_interface->m_top_box.get_posx() + 2;
+                 y= m_vertices[actuel].m_interface->m_top_box.get_posy() + 2;
+
                 std::cout << "actuel : " << actuel<< std::endl;
 
                 stack_dfs.pop();
@@ -1018,9 +1056,41 @@ void Graph::fortement_connexe()
                     stack_dfs.push(next);
                 }
 
-
                 colorer(actuel,tour);
             }
+
+
+
+                            std::cout << "composante size :  : " << composante_graphe_reduit.size()<< std::endl;
+
+            if(composante_graphe_reduit.size()>1)
+            {
+                fichier<< tour << std::endl << composante_graphe_reduit.size() << std::endl;
+                 for(int i = 0; i<composante_graphe_reduit.size(); i++)
+                 {
+                     fichier<< composante_graphe_reduit[i] << std::endl;
+                     supprimer(composante_graphe_reduit[i]);
+                 }
+
+
+                    add_interfaced_vertex(stock+tour,0,x,y,"/");
+                    colorer(stock+tour,tour);
+
+
+                for(int i = 0; i<composante_graphe_reduit.size(); i++)
+                {
+                    graph_red_egde(composante_graphe_reduit[i],stock+tour,marque_edge);
+                }
+            }
+
+            if(composante_graphe_reduit.size()==1)
+                {
+                    fichier << tour << std::endl << 1 << std::endl << composante_graphe_reduit.front() << std::endl;
+                    m_vertices[composante_graphe_reduit.front()].m_interface->m_top_box.remove_child(m_vertices[composante_graphe_reduit.front()].m_interface->m_img);
+
+                }
+
+            composante_graphe_reduit.clear();
 
             tour++;
 
@@ -1034,7 +1104,185 @@ void Graph::fortement_connexe()
 
     }
 
+    }
+
+    fichier.close();
+
     ///FIN ETAPE 2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!///
+
+
+}
+
+
+void Graph::back_to_colored_graph()
+{
+    int tour, nb_sommets, indice_sommet;
+    empty_edges();
+    empty_cim();
+    empty_vertice();
+    clear_interface();
+
+
+    std::stringstream path;
+
+    path << "graph" << m_id << ".txt";
+
+    make_example(path.str());
+
+
+    std::ifstream fichier("graphredcouleur.txt"); //ouverture du fichier
+    if(fichier) //si le fichier à bien été ouvert
+    {
+
+            while(!fichier.eof())
+            {
+                fichier >> tour;
+                fichier >> nb_sommets;
+
+                for(int i = 0; i<nb_sommets; i++)
+                {
+                    fichier >> indice_sommet;
+                    colorer(indice_sommet,tour);
+                }
+            }
+
+
+    }
+
+    fichier.close();
+
+
+
+}
+
+
+void Graph::graph_red_egde(int actuel, int indice, std::vector<int>& marque)
+{
+
+    std::vector<int> sommets_potentiels_s1;
+    std::vector<int> sommets_potentiels_s2;
+
+
+    std::stringstream path;
+
+    int nbarete;
+    int S1, S2,ind,poids;
+    bool est_present;
+
+    std::cout << "indice : " << indice << std::endl;
+    path << "ref" << m_id << ".txt";
+
+    std::ifstream fichier(path.str());
+
+    if(fichier)
+    {
+         fichier>>nbarete;
+
+        //on parcours toutes les arêtes du fichier
+        for(int i=0; i<nbarete; i++)
+        {
+            fichier>>S1>>S2>>ind>>poids;
+
+            if(S1==actuel)
+            {
+                sommets_potentiels_s2.push_back(S2);
+            }
+
+            if(S2==actuel)
+            {
+                sommets_potentiels_s1.push_back(S1);
+            }
+
+        }
+
+        std::cout << "liste sommets potentiels : "<< std::endl;
+
+        for(int i=0; i<sommets_potentiels_s1.size();i++)
+            std::cout << "sommet potentiel arete s1 : " << sommets_potentiels_s1[i] << std::endl;
+
+        /*   if(sommets_potentiels.size() == 0)
+               return -1;*/
+
+        if(sommets_potentiels_s1.size() != 0)
+        {
+
+
+            for(int i=0; i<sommets_potentiels_s1.size(); i++)
+            {
+                est_present=false;
+
+                for(int j=0; j<marque.size(); j++)
+                {
+                    //std::cout << "marque : " << marque[j] << " et sommet potentiel : " << sommets_potentiels_s1[i] << std::endl;
+                    if(sommets_potentiels_s1[i] == marque[j])
+                        est_present=true;
+                }
+
+                for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                {
+                    if(sommets_potentiels_s1[i] == it->first)
+                        est_present=true;
+
+                }
+
+
+                if(!est_present)
+                {
+                    std::cout << "sommet potentiel S1 : " <<sommets_potentiels_s1[i] <<std::endl;
+
+                    marque.push_back(sommets_potentiels_s1[i]);
+                    add_interfaced_edge(m_edges.size()+10,sommets_potentiels_s1[i],indice,0);
+                }
+            }
+
+
+        }
+
+         if(sommets_potentiels_s2.size() != 0)
+        {
+
+
+            for(int i=0; i<sommets_potentiels_s2.size(); i++)
+            {
+                est_present=false;
+
+                for(int j=0; j<marque.size(); j++)
+                {
+                    //std::cout << "marque : " << marque[j] << " et sommet potentiel : " << sommets_potentiels_s2[i] << std::endl;
+                    if(sommets_potentiels_s2[i] == marque[j])
+                        est_present=true;
+                }
+
+                for (auto it = m_cim.begin(); it!=m_cim.end(); ++it)
+                {
+                    if(sommets_potentiels_s2[i] == it->first)
+                        est_present=true;
+
+                }
+
+
+                if(!est_present)
+                {
+                    std::cout << "sommet potentiel S2 : " <<sommets_potentiels_s2[i] <<std::endl;
+                    marque.push_back(sommets_potentiels_s2[i]);
+                    add_interfaced_edge(m_edges.size()+10,indice,sommets_potentiels_s2[i],0);
+                }
+            }
+
+
+        }
+
+
+    }
+
+
+    else
+    {
+        std::cout << "file " << path.str() << " could not be found";
+    }
+
+    fichier.close();
+
 
 
 }
